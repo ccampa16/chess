@@ -49,18 +49,47 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        //pawns
+        for (int col = 1; col <= 8; col++){
+            addPiece(new ChessPosition(2, col), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
+            addPiece(new ChessPosition(7, col), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
+        }
+        //set order of back row
+        ChessPiece.PieceType[] backRowOrder = {
+                ChessPiece.PieceType.ROOK, ChessPiece.PieceType.KNIGHT, ChessPiece.PieceType.BISHOP, ChessPiece.PieceType.QUEEN,
+                ChessPiece.PieceType.KING, ChessPiece.PieceType.BISHOP, ChessPiece.PieceType.KNIGHT, ChessPiece.PieceType.ROOK };
+
+        for (int i = 1; i <= 8; i++){ //loop through rows
+            for (int j = 1; j <= 8; j++){ //loop through columns
+                ChessGame.TeamColor teamColor;
+                if (i <= 2){ // if playing on bottom half of board
+                    teamColor = ChessGame.TeamColor.WHITE;
+                } else { //on top half of board
+                    teamColor = ChessGame.TeamColor.BLACK;
+                }
+
+                if (i == 1||i == 8){
+                    addPiece(new ChessPosition(i, j), new ChessPiece(teamColor, backRowOrder[j -1]));
+                } else if (i == 2 || i == 7) {
+                    continue;
+                } else {
+                    addPiece(new ChessPosition(i, j), null);
+                }
+            }
+        }
+
+        //throw new RuntimeException("Not implemented");
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ChessBoard that)) return false;
-        return Arrays.equals(squares, that.squares);
+        return Arrays.deepEquals(squares, that.squares);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(squares);
+        return Arrays.deepHashCode(squares);
     }
 }
