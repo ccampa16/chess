@@ -77,9 +77,9 @@ public class ChessPiece {
             case ROOK:
                 validMoves.addAll(getRookMoves(board, row, col));
                 break;
-//            case PAWN:
-//                validMoves.addAll(getPawnMoves(board, row, col));
-//                break;
+            case PAWN:
+                validMoves.addAll(getPawnMoves(board, row, col));
+                break;
             default:
                 break;
         }
@@ -237,7 +237,75 @@ public class ChessPiece {
         return validMoves;
     }
   //pawn
+    private Collection<ChessMove> getPawnMoves(ChessBoard board, int row, int col){
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        int direction;
+        if (pieceColor == ChessGame.TeamColor.WHITE) {
+            direction = 1;
+        } else {
+            direction = -1;
+        }
 
+        int newRow = row + direction;
+        int newCol = col;
+        if (isValidPawnMove(board, newRow, newCol)){
+            //promotion
+            if((pieceColor == ChessGame.TeamColor.WHITE && newRow == 8) || (pieceColor == ChessGame.TeamColor.BLACK && newRow == 1)){
+                addPawnPromotions(validMoves, row, col, newRow, col);
+            } else {
+                validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(newRow, newCol), null));
+            }
+            //double move
+            //int doubleMoveRow = newRow + direction;
+            if ((pieceColor == ChessGame.TeamColor.WHITE && row == 2) || (pieceColor == ChessGame.TeamColor.BLACK && row == 7)){
+                //if (isValidPawnMove(board, doubleMoveRow, col)){
+                int doubleMoveRow = newRow + direction;
+                if(isValidPawnMove(board, doubleMoveRow, newCol)){
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(doubleMoveRow, newCol), null));
+                }
+            }
+        }
+
+        //handle pawn captures
+        int[] captureCols = {col - 1, col + 1};
+        for (int captureCol : captureCols){
+            int captureRow = row + direction;
+            if (isValidPawnCapture(board, captureRow, captureCol)){
+                //pawn promotion on capture at the opposite side
+                if ((pieceColor == ChessGame.TeamColor.WHITE && newRow == 8) || (pieceColor == ChessGame.TeamColor.BLACK && newRow == 1)){
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(captureRow, captureCol), PieceType.QUEEN));
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(captureRow, captureCol), PieceType.BISHOP));
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(captureRow, captureCol), PieceType.ROOK));
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(captureRow, captureCol), PieceType.KNIGHT));
+                    //addPawnPromotions(validMoves, row, col, captureRow, captureCol);
+                } else {
+                    validMoves.add(new ChessMove(new ChessPosition(row, col), new ChessPosition(captureRow, captureCol), null));
+                }
+            }
+        }
+
+        //promotion after single move?
+        return validMoves;
+    }
+    private void addPawnPromotions(Collection<ChessMove> validMoves, int startRow, int startCol, int endRow, int endCol){
+        validMoves.add(new ChessMove(new ChessPosition(startRow, startCol), new ChessPosition(endRow, endCol), PieceType.QUEEN));
+        validMoves.add(new ChessMove(new ChessPosition(startRow, startCol), new ChessPosition(endRow, endCol), PieceType.BISHOP));
+        validMoves.add(new ChessMove(new ChessPosition(startRow, startCol), new ChessPosition(endRow, endCol), PieceType.ROOK));
+        validMoves.add(new ChessMove(new ChessPosition(startRow, startCol), new ChessPosition(endRow, endCol), PieceType.KNIGHT));
+    }
+    //check if spot is empty
+    private boolean isValidPawnMove(ChessBoard board, int newRow, int newCol){
+        boolean inBounds = newRow >= 1 && newRow <= 8 && newCol >= 1 && newCol <= 8;
+        boolean isEmpty = board.getPiece(new ChessPosition(newRow, newCol)) == null;
+        return  inBounds && isEmpty;
+    }
+    //check if spot has opp piece
+    private boolean isValidPawnCapture(ChessBoard board, int newRow, int newCol){
+        boolean inBounds = newRow >= 1 && newRow <= 8 && newCol >= 1 && newCol <= 8;
+        ChessPiece pieceInPosition = board.getPiece(new ChessPosition(newRow, newCol));
+        boolean isOppPiece = pieceInPosition != null && pieceInPosition.getTeamColor() != pieceColor;
+        return inBounds && isOppPiece;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -251,31 +319,3 @@ public class ChessPiece {
         return Objects.hash(pieceColor, type);
     }
 }
-
-//
-//        int[][] directionChoices = {
-//                {-1, 0}, {1, 0}, {0, -1}, {0, 1}
-//        };
-//        for (int[] direction : directionChoices){
-//            int i = direction[0];
-//            int j = direction[1];
-//
-//            int newRow = row + i;
-//            int newCol = col + j;
-//
-//            while (newRow >= 1 && newRow <= 8 && newCol >= 1 && newCol <= 8) {
-//                ChessPosition newPosition = new ChessPosition(newRow, newCol);
-//                ChessPiece capturedPiece = board.getPiece(newPosition);
-//
-//                if (capturedPiece == null) {
-//                    validMoves.add(new ChessMove(new ChessPosition(row, col), newPosition, null));
-//                } else if (capturedPiece.getTeamColor() != pieceColor) {
-//                    validMoves.add(new ChessMove(new ChessPosition(row, col), newPosition, null));
-//                    break; //opp color
-//                } else {
-//                    break; //obstacle
-//                }
-//                newRow += i;
-//                newCol += j;
-//            }
-//        }
