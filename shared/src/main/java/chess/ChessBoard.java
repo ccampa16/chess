@@ -22,7 +22,6 @@ public class ChessBoard {
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
         squares[position.getRow()-1][position.getColumn()-1] = piece;
-        //throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -38,10 +37,8 @@ public class ChessBoard {
         if (row >= 1 && row <= 8 && col >= 1 && col <= 8){
             return squares[row-1][col-1];
         } else {
-            return null; //need to handle case where position is out of bounds
+            return null;
         }
-        //return squares[position.getRow()][position.getColumn()]; from vid code
-        //throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -77,8 +74,6 @@ public class ChessBoard {
                 }
             }
         }
-
-        //throw new RuntimeException("Not implemented");
     }
 
     @Override
