@@ -7,8 +7,6 @@ b
 2shared/src/test/java/passoffTests/TestFactory.java,e/9/e9394cf4f23ef8e3e7f7d6cf9f7b3605ba345448
 d
 4shared/src/main/java/chess/InvalidMoveException.java,e/3/e39c3486fec5f2b87e64591840622613400adc99
-Z
-*shared/src/main/java/chess/ChessBoard.java,d/f/dfc4ec84b5d57ac6e0266e9c319b728da99e0c51
 ]
 -shared/src/main/java/chess/ChessPosition.java,3/b/3b013a24b64d343e15bac32b29d3d69c6c135d82
 Y
