@@ -180,52 +180,7 @@ public class ChessGame {
         }
         return null;
     }
-    public Collection<ChessMove> piecesWithKingChecked(ChessPosition kingPos, TeamColor kingColor){
-        Collection<ChessMove> kingAttackedMoves = new ArrayList<>();
-        if (kingPos == null){
-            return kingAttackedMoves;
-        }
-        //helper functions for each piece
-        return kingAttackedMoves;
-    }
-    public void kingOnKing (Collection<ChessMove> kingAttackedMoves, ChessPosition kingPos, TeamColor kingColor, int newRow, int newCol){
-        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){ //valid spot inbounds
-            ChessPosition newPos = new ChessPosition(newRow, newCol);
-            ChessPiece king = chessBoard.getPiece(newPos);
-            if (king != null && king.getTeamColor() != kingColor && king.getPieceType() == ChessPiece.PieceType.KING){
-                kingAttackedMoves.add(new ChessMove(newPos, kingPos, null));
-            }
-        }
-    }
-    public void pawnOnKing(Collection<ChessMove> kingAttackedMoves, ChessPosition kingPos, TeamColor kingColor){
-        int direction = (kingColor == TeamColor.WHITE) ? 1 : -1;
-        pawnMove(kingAttackedMoves, kingPos, kingColor, direction, 1);
-        pawnMove(kingAttackedMoves, kingPos, kingColor, direction, -1);
-    }
-    public void knightOnKing(Collection<ChessMove> kingAttackedMoves, ChessPosition kingPos, TeamColor kingColor, int rowChange, int colChange){
-        int newRow = kingPos.getRow() + rowChange;
-        int newCol = kingPos.getColumn() + colChange;
-        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
-            ChessPosition newPos = new ChessPosition(newRow, newCol);
-            ChessPiece knight = chessBoard.getPiece(newPos);
-            if (knight != null && knight.getPieceType() == ChessPiece.PieceType.KNIGHT && knight.getTeamColor() != kingColor){
-                kingAttackedMoves.add(new ChessMove(newPos, kingPos, null));
-            }
-        }
-    }
-    //public void rookOrQueenOnKing()
 
-    private void pawnMove(Collection<ChessMove> kingAttackedMoves, ChessPosition kingPos, TeamColor kingColor, int rowChange, int colChange){
-        int newRow = kingPos.getRow() + rowChange;
-        int newCol = kingPos.getColumn() + colChange;
-        if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
-            ChessPosition newPos = new ChessPosition(newRow, newCol);
-            ChessPiece piece = chessBoard.getPiece(newPos);
-            if(piece != null && piece.getPieceType() == ChessPiece.PieceType.PAWN && piece.getTeamColor() != kingColor){
-                kingAttackedMoves.add(new ChessMove(newPos, kingPos, null));
-            }
-        }
-    }
 
 
 
