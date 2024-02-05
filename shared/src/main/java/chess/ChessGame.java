@@ -55,19 +55,19 @@ public class ChessGame {
         }
         Collection<ChessMove> possibleMoves = new ArrayList<>(currPiece.pieceMoves(chessBoard, startPosition));
         ArrayList<ChessMove> invalidMoves = new ArrayList<>();
-            for (ChessMove move : possibleMoves) {
-                ChessPiece piece = chessBoard.getPiece(move.getStartPosition());
-                ChessPiece newPiece = chessBoard.getPiece(move.getEndPosition());
-                chessBoard.addPiece(move.getEndPosition(), piece);
-                chessBoard.deletePiece(move.getStartPosition());
-                if(isInCheck(piece.getTeamColor())){
-                    invalidMoves.add(move);
-                }
-                chessBoard.addPiece(move.getStartPosition(), piece);
-                chessBoard.addPiece(move.getEndPosition(), newPiece);
+        for (ChessMove move : possibleMoves) {
+            ChessPiece piece = chessBoard.getPiece(move.getStartPosition());
+            ChessPiece newPiece = chessBoard.getPiece(move.getEndPosition());
+            chessBoard.addPiece(move.getEndPosition(), piece);
+            chessBoard.deletePiece(move.getStartPosition());
+            if(isInCheck(piece.getTeamColor())){
+                invalidMoves.add(move);
             }
-            possibleMoves.removeAll(invalidMoves);
-            return possibleMoves;
+            chessBoard.addPiece(move.getStartPosition(), piece);
+            chessBoard.addPiece(move.getEndPosition(), newPiece);
+        }
+        possibleMoves.removeAll(invalidMoves);
+        return possibleMoves;
     }
 
     /**
@@ -77,8 +77,8 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        TeamColor turnColor = getTeamTurn();
         ChessPiece piece = chessBoard.getPiece(move.getStartPosition());
+        TeamColor turnColor = getTeamTurn();
         TeamColor color = piece.getTeamColor();
         if (color != turnColor || !piece.pieceMoves(chessBoard, move.getStartPosition()).contains(move)) {
             throw new InvalidMoveException();
