@@ -152,9 +152,18 @@ public class ChessGame {
                 ChessPosition currPos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(currPos);
 
-                if(piece != null && piece.getTeamColor() != teamColor &&
-                        piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, null))){
-                    return true;
+                if(piece != null && piece.getTeamColor() != teamColor){
+                    if (piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, null))){
+                        return true;
+                    } else if (piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, ChessPiece.PieceType.KNIGHT))){
+                        return true;
+                    } else if (piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, ChessPiece.PieceType.QUEEN))){
+                        return true;
+                    }else if (piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, ChessPiece.PieceType.ROOK))){
+                        return true;
+                    } else if (piece.pieceMoves(chessBoard, currPos).contains(new ChessMove(currPos, kingPos, ChessPiece.PieceType.BISHOP))){
+                        return true;
+                    }
                 }
             }
         }
