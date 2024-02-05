@@ -105,7 +105,7 @@ public class ChessGame {
             throw new InvalidMoveException("Move not valid");
         } else {
             ChessPiece newPiece = piece;
-            int promotionRank = (color == TeamColor.WHITE) ? 7 :0;
+            int promotionRank = (color == TeamColor.WHITE) ? 8 :1;
 //            if (move.getPromotionPiece() != ChessPiece.PieceType.PAWN){
 //                if (move.getEndPosition().getRow() == promotionRank) {
 //                    newPiece = new ChessPiece(color, move.getPromotionPiece());
@@ -114,12 +114,15 @@ public class ChessGame {
 //                }
 //            }
             if (move.getEndPosition().getRow() == promotionRank && piece.getPieceType() == ChessPiece.PieceType.PAWN){
-                if (move.getPromotionPiece() == ChessPiece.PieceType.PAWN){
-                    throw new InvalidMoveException("Invalid promotion attempt for pawn");
-                } else {
+                if (move.getPromotionPiece() != null) { //(move.getPromotionPiece() == ChessPiece.PieceType.PAWN)
+//                    throw new InvalidMoveException("Invalid promotion attempt for pawn");
+//                } else {
+//                    newPiece = new ChessPiece(color, move.getPromotionPiece());
+//                }
                     newPiece = new ChessPiece(color, move.getPromotionPiece());
                 }
             }
+
             ChessPiece attackedPiece = this.chessBoard.getPiece(move.getEndPosition());
             this.chessBoard.addPiece(move.getEndPosition(), newPiece);
             this.chessBoard.deletePiece(move.getStartPosition());
@@ -144,7 +147,7 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
         ChessPosition kingPos = findKingPosition(teamColor);
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i < 9; i++){
             for (int j = 1; j < 9; j++) {
                 ChessPosition currPos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(currPos);
@@ -181,7 +184,7 @@ public class ChessGame {
     }
     private ChessPosition findKingPosition(TeamColor currTeamColor){
         for (int i = 1; i < 9; i++){
-            for (int j = 1; j < 9; j++){
+            for (int j = 1; j < 9; j++) {
                 ChessPosition currPos = new ChessPosition(i,j);
                 ChessPiece piece = chessBoard.getPiece(currPos);
                 if (piece != null && piece.getTeamColor() == currTeamColor && piece.getPieceType() == ChessPiece.PieceType.KING) {
