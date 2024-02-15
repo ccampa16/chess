@@ -141,24 +141,25 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        if (!isInCheck(teamColor)){
+        if (!isInCheck(teamColor)) {
             return false;
         }
-        for (int i = 1; i < 9; i++){
+        for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 ChessPosition currPos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(currPos);
-                if(piece != null && piece.getTeamColor() == teamColor && !validMoves(currPos).isEmpty()) {
+                if (piece != null && piece.getTeamColor() == teamColor && !validMoves(currPos).isEmpty()) {
                     return false;
                 }
             }
         }
         return true;
     }
-    private ChessPosition findKingPosition(TeamColor currTeamColor){
-        for (int i = 1; i < 9; i++){
+
+    private ChessPosition findKingPosition(TeamColor currTeamColor) {
+        for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition currPos = new ChessPosition(i,j);
+                ChessPosition currPos = new ChessPosition(i, j);
                 ChessPiece piece = chessBoard.getPiece(currPos);
                 if (piece != null && piece.getTeamColor() == currTeamColor && piece.getPieceType() == ChessPiece.PieceType.KING) {
                     return currPos;
@@ -167,11 +168,7 @@ public class ChessGame {
         }
         return null;
     }
-
-
-
-
-
+    
     /**
      * Determines if the given team is in stalemate, which here is defined as having
      * no valid moves
