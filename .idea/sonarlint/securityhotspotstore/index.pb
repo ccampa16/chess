@@ -23,11 +23,5 @@ X
 (server/src/main/resources/web/index.html,2/9/29b241d0368b0f9fc52e453950f9d79c51d59726
 V
 &server/src/main/resources/web/index.js,f/b/fbe9c9d5399fd0f41c6b126165e19c77701fe909
-Z
-*shared/src/main/java/chess/ChessBoard.java,d/f/dfc4ec84b5d57ac6e0266e9c319b728da99e0c51
 h
 8server/src/main/java/dataAccess/DataAccessException.java,2/6/263075e6ff98ad42ac65d0ab9954cb3792b4b975
-s
-Cserver/src/test/java/passoffTests/serverTests/StandardAPITests.java,6/2/62bf729b8e8a64635bd8b01f3c0b61d8e707e697
-W
-'server/src/main/java/server/Server.java,8/0/8036b8cb9ce2e6760f04e2a3b475b260935bb7b8
