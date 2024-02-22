@@ -23,5 +23,3 @@ X
 (server/src/main/resources/web/index.html,2/9/29b241d0368b0f9fc52e453950f9d79c51d59726
 V
 &server/src/main/resources/web/index.js,f/b/fbe9c9d5399fd0f41c6b126165e19c77701fe909
-h
-8server/src/main/java/dataAccess/DataAccessException.java,2/6/263075e6ff98ad42ac65d0ab9954cb3792b4b975
