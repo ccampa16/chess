@@ -1,8 +1,10 @@
 package server;
 
+import handler.ClearHandler;
 import result.ClearResult;
 import service.ClearService;
 import spark.*;
+
 
 public class Server {
 
@@ -18,6 +20,8 @@ public class Server {
     }
     private static void createRoutes (){
         Spark.before((req, res) -> System.out.println("Executing route: " + req.pathInfo()));
+
+        //is the pet shop example a way of doing it without handler classes? would that work with having so many
 //        Spark.delete("/db", (request, response) -> );
 //        Spark.post("/user", (request, response) -> register(request, response));
 //        Spark.post("/session", (request, response) -> login(request, response));

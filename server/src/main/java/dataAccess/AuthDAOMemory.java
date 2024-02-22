@@ -20,7 +20,7 @@ public class AuthDAOMemory implements AuthDAO{
     @Override
     public AuthData getAuth(String authToken){
         for (AuthData auth : db){
-            if (auth.getAuthToken().equals(authToken)){
+            if (auth.authToken().equals(authToken)){
                 return auth;
             }
         }
@@ -30,7 +30,7 @@ public class AuthDAOMemory implements AuthDAO{
     public void deleteAuth(String authToken){
         AuthData authToRemove = null;
         for (AuthData auth : db) {
-            if (auth.getAuthToken().equals(authToken)) {
+            if (auth.authToken().equals(authToken)) {
                 authToRemove = auth;
                 break; // Found the auth data, no need to continue searching
             }

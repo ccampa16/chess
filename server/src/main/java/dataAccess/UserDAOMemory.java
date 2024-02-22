@@ -25,7 +25,7 @@ public class UserDAOMemory implements UserDAO {
     @Override
     public UserData getUser (String username) throws DataAccessException {
         for (UserData user : db){
-            if (user.getUsername().equals(username)){
+            if (user.username().equals(username)){
                 return user;
             }
         }
@@ -34,7 +34,7 @@ public class UserDAOMemory implements UserDAO {
     @Override
     public boolean checkUser(String username, String password){
         for (UserData user : db){
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+            if (user.username().equals(username) && user.password().equals(password)){
                 return true;
             }
         }
