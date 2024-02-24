@@ -7,14 +7,18 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class AuthDAOMemory implements AuthDAO{
+    //do the dao classes need to handle the fail cases??
     private HashSet<AuthData> db;
-    AuthDAOMemory(){
+    public AuthDAOMemory(){
         db = new HashSet<>();
     }
     @Override
     public void createAuth(String username){
         String authToken = UUID.randomUUID().toString();
         AuthData authData = new AuthData(username, authToken);
+//        if (db.contains(authData.authToken())){
+//            throw new DataAccessException("Added auth that already exists: " + );
+//        }
         db.add(authData);
     }
     @Override
@@ -32,7 +36,7 @@ public class AuthDAOMemory implements AuthDAO{
         for (AuthData auth : db) {
             if (auth.authToken().equals(authToken)) {
                 authToRemove = auth;
-                break; // Found the auth data, no need to continue searching
+                break;
             }
         }
         if (authToRemove != null) {

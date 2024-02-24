@@ -1,25 +1,22 @@
 package service;
 
-import dataAccess.AuthDAO;
-import dataAccess.DataAccessException;
-import dataAccess.GameDAO;
-import dataAccess.UserDAO;
+import dataAccess.*;
 import org.eclipse.jetty.server.Authentication;
 import result.ClearResult;
 
 public class ClearService {
-    private final UserDAO userDao;
-    private final AuthDAO authDAO;
-    private final GameDAO gameDAO;
+    private final UserDAOMemory userDaoMemory;
+    private final AuthDAOMemory authDAOMemory;
+    private final GameDAOMemory gameDAOMemory;
 
-    public ClearService(UserDAO userDao, AuthDAO authDAO, GameDAO gameDAO) {
-        this.userDao = userDao;
-        this.authDAO = authDAO;
-        this.gameDAO = gameDAO;
+    public ClearService(UserDAOMemory userDaoMemory, AuthDAOMemory authDAOMemory, GameDAOMemory gameDAOMemory) {
+        this.userDaoMemory = userDaoMemory;
+        this.authDAOMemory = authDAOMemory;
+        this.gameDAOMemory = gameDAOMemory;
     }
     public void clear() throws DataAccessException {
-        userDao.clear();
-        authDAO.clear();
-        gameDAO.clear();
+        userDaoMemory.clear();
+        authDAOMemory.clear();
+        gameDAOMemory.clear();
     }
 }

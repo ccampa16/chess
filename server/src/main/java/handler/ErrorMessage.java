@@ -1,11 +1,11 @@
-package result;
+package handler;
 
-public class ClearResult {
+import com.google.gson.JsonElement;
+
+public class ErrorMessage {
     private String message;
-    //private boolean success;
-    public ClearResult(String message){
+    public ErrorMessage(String message) {
         this.message = message;
-//        this.success = success;
     }
 
     public String getMessage() {
@@ -15,5 +15,4 @@ public class ClearResult {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }

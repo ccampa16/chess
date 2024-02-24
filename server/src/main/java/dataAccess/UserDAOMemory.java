@@ -6,15 +6,10 @@ import org.eclipse.jetty.server.Authentication;
 import java.util.HashSet;
 
 public class UserDAOMemory implements UserDAO {
-    //open connection method
-    //close connection method
-    //get connection method
     private HashSet<UserData> db;
-    UserDAOMemory(){
+    public UserDAOMemory(){
         db = new HashSet<>();
     }
-
-
 
     @Override
     public UserData createUser(String username, String password, String email){
