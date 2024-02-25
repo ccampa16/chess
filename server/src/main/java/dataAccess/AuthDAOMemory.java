@@ -13,9 +13,9 @@ public class AuthDAOMemory implements AuthDAO{
         db = new HashSet<>();
     }
     @Override
-    public void createAuth(String username){
-        String authToken = UUID.randomUUID().toString();
-        AuthData authData = new AuthData(username, authToken);
+    public void createAuth(String username, String authToken){
+       // String authToken = UUID.randomUUID().toString();
+        AuthData authData = new AuthData(authToken, username);
 //        if (db.contains(authData.authToken())){
 //            throw new DataAccessException("Added auth that already exists: " + );
 //        }
