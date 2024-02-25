@@ -5,15 +5,9 @@ import dataAccess.AuthDAOMemory;
 import dataAccess.DataAccessException;
 import dataAccess.GameDAOMemory;
 import dataAccess.UserDAOMemory;
-import handler.ClearHandler;
-import handler.LoginHandler;
-import handler.LogoutHandler;
-import handler.RegisterHandler;
+import handler.*;
 import result.ClearResult;
-import service.ClearService;
-import service.LoginService;
-import service.LogoutService;
-import service.RegisterService;
+import service.*;
 import spark.*;
 
 
@@ -45,7 +39,9 @@ public class Server {
         LogoutService logoutService = new LogoutService(new AuthDAOMemory());
         LogoutHandler logoutHandler = new LogoutHandler(logoutService);
         Spark.delete("/session", (request, response) -> logoutHandler.logout(request, response));
-//        Spark.get("/game", (request, response) -> listGames(request, response));
+        ListGamesService listGamesService = new ListGamesService(new AuthDAOMemory(), new GameDAOMemory());
+        ListGamesHandler listGamesHandler = new ListGamesHandler(listGamesService);
+        Spark.get("/game", (request, response) -> listGamesHandler.listGames(request, response));
 //        Spark.post("/game", (request, response) -> createGame(request, response));
 //        Spark.put("/game", (request, response) -> joinGame(request, response));
     }

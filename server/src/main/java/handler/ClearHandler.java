@@ -15,8 +15,7 @@ public class ClearHandler {
         this.clearService = clearService;
     }
 
-    //where does the exception logic come in?? and where are we getting the status codes?
-    //should service not have any parameters? how does it access the daos then?
+
     public Object clear(Request req, Response res) {
         try {
             clearService.clear();

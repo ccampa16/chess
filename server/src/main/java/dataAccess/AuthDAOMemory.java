@@ -1,10 +1,8 @@
 package dataAccess;
 
 import model.AuthData;
-import model.UserData;
 
 import java.util.HashSet;
-import java.util.UUID;
 
 public class AuthDAOMemory implements AuthDAO{
     //do the dao classes need to handle the fail cases??
@@ -42,6 +40,10 @@ public class AuthDAOMemory implements AuthDAO{
         if (authToRemove != null) {
             db.remove(authToRemove);
         }
+    }
+    @Override
+    public boolean checkAuth(String authtoken){
+        return getAuth(authtoken) != null;
     }
     @Override
     public void clear(){
