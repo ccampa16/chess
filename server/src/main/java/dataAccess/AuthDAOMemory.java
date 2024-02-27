@@ -12,11 +12,7 @@ public class AuthDAOMemory implements AuthDAO{
     }
     @Override
     public void createAuth(String username, String authToken){
-       // String authToken = UUID.randomUUID().toString();
         AuthData authData = new AuthData(authToken, username);
-//        if (db.contains(authData.authToken())){
-//            throw new DataAccessException("Added auth that already exists: " + );
-//        }
         db.add(authData);
     }
     @Override

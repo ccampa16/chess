@@ -14,7 +14,6 @@ public class ClearHandler {
         this.clearService = clearService;
     }
 
-
     public Object clear(Request req, Response res) {
         try {
             clearService.clear();

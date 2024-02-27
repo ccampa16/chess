@@ -32,11 +32,9 @@ public class GameDAOMemory implements GameDAO{
 
     @Override
     public void createGame(GameData newGame){
-        //GameData newGame = new GameData(newGame, whiteUsername, blackUsername, gameName, game);
         GameData addedGame;
         addedGame = new GameData(currentGameID, newGame.whiteUsername(), newGame.blackUsername(), newGame.gameName(), newGame.game());
         db.add(addedGame);
-        //incrementGameID();
     }
 
     @Override
