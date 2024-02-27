@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import request.CreateGameRequest;
+import result.CreateGameResult;
 import spark.Request;
+
+import java.util.UUID;
 
 public class CreateServiceTest {
     private CreateGameService createGameService;
@@ -18,6 +21,7 @@ public class CreateServiceTest {
     @BeforeEach
     public void setUp(){
         AuthDAOMemory authDAOMemory = new AuthDAOMemory();
+        authDAOMemory.createAuth("valid_username", "valid_authtoken");
         GameDAOMemory gameDAOMemory = new GameDAOMemory();
         createGameService = new CreateGameService(authDAOMemory, gameDAOMemory);
     }
@@ -26,6 +30,13 @@ public class CreateServiceTest {
         CreateGameRequest request = new CreateGameRequest("GameName");
         Assertions.assertThrows(UnauthorizedException.class, ()-> createGameService.createGame(request, "invalid_authtoken"));
     }
-
+    @Test
+    void createGameSuccess() throws DataAccessException{
+        CreateGameRequest request = new CreateGameRequest("GameName");
+        //String authtoken = UUID.randomUUID().toString();
+        CreateGameResult result = createGameService.createGame(request, "valid_authtoken");
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result.getGameID() > 0);
+    }
 
 }

@@ -34,4 +34,16 @@ class ClearServiceTest {
         Assertions.assertNull(authDAOMemory.getAuth("auhtoken1"));
         Assertions.assertNull(authDAOMemory.getAuth("auhtoken2"));
     }
+    @Test
+    void clearFail() throws DataAccessException{
+        userDAOMemory.createUser("user1", "pass1", "user1@gmail");
+        userDAOMemory.createUser("user2", "pass2", "user2@gmail");
+        authDAOMemory.createAuth("user1", "authtoken1");
+        authDAOMemory.createAuth("user2", "authtoken2");
+        clearService.clear();
+        userDAOMemory.createUser("user3", "pass3", "user3@gmail");
+        authDAOMemory.createAuth("user3", "authtoken3");
+        Assertions.assertNotNull(userDAOMemory.getUser("user3"));
+        Assertions.assertNotNull(authDAOMemory.getAuth("authtoken3"));
+    }
 }
