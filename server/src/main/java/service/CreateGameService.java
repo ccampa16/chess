@@ -1,12 +1,14 @@
 package service;
 
+import chess.ChessGame;
 import dataAccess.AuthDAOMemory;
-import dataAccess.DataAccessException;
+import dataAccess.Exceptions.BadRequestException;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Exceptions.UnauthorizedException;
 import dataAccess.GameDAOMemory;
+import model.GameData;
+import request.CreateGameRequest;
 import result.CreateGameResult;
-import spark.Request;
-
-import java.util.UUID;
 
 public class CreateGameService {
     private final AuthDAOMemory authDAOMemory;
@@ -16,18 +18,19 @@ public class CreateGameService {
         this.authDAOMemory = authDAOMemory;
         this.gameDAOMemory = gameDAOMemory;
     }
-    //are we supposed to generate the gameID?/
-    public CreateGameResult createGame(Request req, String authtoken) throws DataAccessException {
+    public CreateGameResult createGame(CreateGameRequest req, String authtoken) throws DataAccessException {
         if (!authDAOMemory.checkAuth(authtoken)){
-            return new CreateGameResult(0, "Error: unauthorized");
+           // return new CreateGameResult(0, "Error: unauthorized");
+            throw new UnauthorizedException("unauthorized");
 
         }
-        int gameID = generateGameID();
-        //add logic for creating a new game
+        if(req.getGameName() == null){
+            throw new BadRequestException("Bad request");
+        }
+        int gameID = gameDAOMemory.incrementGameID();
+        GameData newGame = new GameData(gameID, null, null, req.getGameName(), new ChessGame());
+        gameDAOMemory.createGame(newGame);
+        return new CreateGameResult(newGame.gameID());
+    }
 
-        return new CreateGameResult(gameID, null);
-    }
-    private int generateGameID(){
-        return UUID.randomUUID().hashCode();
-    }
 }

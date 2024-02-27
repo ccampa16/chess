@@ -23,3 +23,13 @@ V
 &server/src/main/resources/web/index.js,f/b/fbe9c9d5399fd0f41c6b126165e19c77701fe909
 X
 (server/src/main/resources/web/index.html,2/9/29b241d0368b0f9fc52e453950f9d79c51d59726
+g
+7server/src/test/java/serviceTests/ClearServiceTest.java,9/4/94d1edaae8cc05d7ac2a0ffbac5289c47ff172e8
+a
+1shared/src/main/java/request/RegisterRequest.java,5/2/52ccbc2adb68eb6f23d504fb0ba01f82d5734f04
+X
+(shared/src/main/java/model/UserData.java,4/a/4a7475d8234e0a3bd1fad3b5ac4f0ea9e6d43286
+b
+2shared/src/main/java/request/ListGamesRequest.java,e/c/ecc21831c40da0c797df3953507c84e90c05b68b
+a
+1shared/src/main/java/request/JoinGameRequest.java,4/f/4f12a51d20094c80df77521f6a849263b4221f8c

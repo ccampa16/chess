@@ -1,19 +1,18 @@
 package service;
 
 import dataAccess.AuthDAOMemory;
-import dataAccess.DataAccessException;
-import result.LogoutResult;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Exceptions.UnauthorizedException;
 
 public class LogoutService {
     private final AuthDAOMemory authDAOMemory;
     public LogoutService(AuthDAOMemory authDAOMemory){
         this.authDAOMemory = authDAOMemory;
     }
-    public LogoutResult logout(String authtoken) throws DataAccessException{
-        if (authDAOMemory.getAuth(authtoken) == null){
-            return new LogoutResult("Error: unauthorized");
+    public void logout(String authtoken) throws DataAccessException{
+        if (!authDAOMemory.checkAuth(authtoken)){
+            throw new UnauthorizedException("unauthorized");
         }
         authDAOMemory.deleteAuth(authtoken);
-        return new LogoutResult(null);
     }
 }

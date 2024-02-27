@@ -1,9 +1,9 @@
 package result;
 
-public class JoinGameResult {
+public class LogoutResult {
     private String message;
 
-    public JoinGameResult(String message) {
+    public LogoutResult(String message) {
         this.message = message;
     }
 

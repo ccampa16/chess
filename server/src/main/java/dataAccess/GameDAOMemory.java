@@ -9,9 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GameDAOMemory implements GameDAO{
-    private HashSet<GameData> db;
+    private static HashSet<GameData> db;
+    private int currentGameID;
+
     public GameDAOMemory(){
         db = new HashSet<>();
+        currentGameID = 1;
     }
     @Override
     public List<GameData> listGames() {
@@ -30,7 +33,10 @@ public class GameDAOMemory implements GameDAO{
     @Override
     public void createGame(GameData newGame){
         //GameData newGame = new GameData(newGame, whiteUsername, blackUsername, gameName, game);
-        db.add(newGame);
+        GameData addedGame;
+        addedGame = new GameData(currentGameID, newGame.whiteUsername(), newGame.blackUsername(), newGame.gameName(), newGame.game());
+        db.add(addedGame);
+        //incrementGameID();
     }
 
     @Override
@@ -41,6 +47,11 @@ public class GameDAOMemory implements GameDAO{
     @Override
     public void clear(){
         db.clear();
+        currentGameID = 1;
+    }
+    public int incrementGameID(){
+        currentGameID++;
+        return currentGameID;
     }
 
 }

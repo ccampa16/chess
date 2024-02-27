@@ -2,16 +2,16 @@ package result;
 
 public class LoginResult {
     private String username;
-    private String authtoken;
-    private String errorMessage;
+    private String authToken;
+    private String message;
 
-    public LoginResult(String username, String authtoken) {
+    public LoginResult(String username, String authToken) {
         this.username = username;
-        this.authtoken = authtoken;
+        this.authToken = authToken;
     }
 
-    public LoginResult(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public LoginResult(String message) {
+        this.message = message;
     }
 
     public String getUsername() {
@@ -22,19 +22,19 @@ public class LoginResult {
         this.username = username;
     }
 
-    public String getAuthtoken() {
-        return authtoken;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setAuthtoken(String authtoken) {
-        this.authtoken = authtoken;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

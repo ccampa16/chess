@@ -1,12 +1,16 @@
 package handler;
 
 import com.google.gson.Gson;
-import dataAccess.DataAccessException;
+import dataAccess.Exceptions.AlreadyTakenException;
+import dataAccess.Exceptions.BadRequestException;
+import dataAccess.Exceptions.DataAccessException;
 import request.RegisterRequest;
 import result.RegisterResult;
 import service.RegisterService;
 import spark.Request;
 import spark.Response;
+
+import java.util.Objects;
 
 public class RegisterHandler {
     private final RegisterService registerService;
@@ -20,24 +24,17 @@ public class RegisterHandler {
             RegisterResult registerResult = registerService.register(registerRequest.getUsername(),
                     registerRequest.getPassword(),
                     registerRequest.getEmail());
-            if (registerResult.getErrorMessage() == null){
-                return new Gson().toJson(registerResult);
-            } else {
-                res.status(getStatusCode(registerResult.getErrorMessage()));
-                return new Gson().toJson(registerResult);
-            }
-        } catch (DataAccessException e) {
+            return new Gson().toJson(registerResult);
+        } catch (BadRequestException e) {
+            res.status(400);
+            return new Gson().toJson(new ErrorMessage("Error: bad request"));
+        } catch (AlreadyTakenException e){
+            res.status(403);
+            return new Gson().toJson(new ErrorMessage("Error: user already taken"));
+        } catch (DataAccessException e) { // why does it make me add this last catch??
             res.status(500);
-            return new Gson().toJson(new ErrorMessage("Internal server error: " + e.getMessage()));
-        }
-
-    }
-    private int getStatusCode(String errorMsg){
-        if (errorMsg.contains("already taken")){
-            return 403;
-        } else {
-            return 400;
+            return new Gson().toJson(new ErrorMessage("Error: " + e.getMessage()));
         }
     }
-
 }
+

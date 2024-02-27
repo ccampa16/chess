@@ -1,8 +1,7 @@
 package service;
 
 import dataAccess.*;
-import org.eclipse.jetty.server.Authentication;
-import result.ClearResult;
+import dataAccess.Exceptions.DataAccessException;
 
 public class ClearService {
     private final UserDAOMemory userDaoMemory;

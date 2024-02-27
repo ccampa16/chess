@@ -1,7 +1,6 @@
 package dataAccess;
-import chess.ChessGame;
+import dataAccess.Exceptions.DataAccessException;
 import model.GameData;
-import model.UserData;
 
 import java.util.List;
 

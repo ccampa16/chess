@@ -1,17 +1,20 @@
 package result;
 
 import model.GameData;
-import request.ListGamesRequest;
 
 import java.util.List;
 
 public class ListGamesResult {
     private List<GameData> games;
-    private String errorMessage;
+    private String message;
 
-    public ListGamesResult(List<GameData> games, String errorMessage) {
+    public ListGamesResult(List<GameData> games, String message) {
         this.games = games;
-        this.errorMessage = errorMessage;
+        this.message = message;
+    }
+
+    public ListGamesResult(List<GameData> games) {
+        this.games = games;
     }
 
     public List<GameData> getGames() {
@@ -22,11 +25,11 @@ public class ListGamesResult {
         this.games = games;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

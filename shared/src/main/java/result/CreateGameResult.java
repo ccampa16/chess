@@ -2,11 +2,14 @@ package result;
 
 public class CreateGameResult {
     private int gameID;
-    private String errorMessage;
+    private String message;
 
-    public CreateGameResult(int gameID, String errorMessage) {
+    public CreateGameResult(int gameID, String message) {
         this.gameID = gameID;
-        this.errorMessage = errorMessage;
+        this.message = message;
+    }
+    public CreateGameResult(int gameID){
+        this.gameID = gameID;
     }
 
     public int getGameID() {
@@ -17,11 +20,11 @@ public class CreateGameResult {
         this.gameID = gameID;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

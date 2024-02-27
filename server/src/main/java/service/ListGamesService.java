@@ -1,7 +1,8 @@
 package service;
 
 import dataAccess.AuthDAOMemory;
-import dataAccess.DataAccessException;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Exceptions.UnauthorizedException;
 import dataAccess.GameDAOMemory;
 import model.GameData;
 import result.ListGamesResult;
@@ -17,13 +18,9 @@ public class ListGamesService {
         this.gameDAOMemory = gameDAOMemory;
     }
     public ListGamesResult listGames(String authtoken) throws DataAccessException {
-        if (authDAOMemory.getAuth(authtoken) == null){
-            return new ListGamesResult(null, "Error: unauthorized");
+        if (!authDAOMemory.checkAuth(authtoken)){
+            throw new UnauthorizedException("Unauthorized");
         }
-        if(!authDAOMemory.checkAuth(authtoken)){
-            return new ListGamesResult(null, "Error: unauthorized");
-        }
-        List<GameData> games = gameDAOMemory.listGames();
-        return new ListGamesResult(games, null);
+        return new ListGamesResult(gameDAOMemory.listGames());
     }
 }

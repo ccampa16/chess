@@ -2,14 +2,14 @@ package result;
 
 public class RegisterResult {
     private String username;
-    private String authtoken;
-    private String errorMessage;
-    public RegisterResult(String username, String authtoken){
+    private String authToken;
+    private String message;
+    public RegisterResult(String username, String authToken){
         this.username = username;
-        this.authtoken = authtoken;
+        this.authToken = authToken;
     }
     public RegisterResult(String errorMsg){
-        this.errorMessage = errorMsg;
+        this.message = errorMsg;
     }
 
     public String getUsername() {
@@ -20,19 +20,19 @@ public class RegisterResult {
         this.username = username;
     }
 
-    public String getAuthtoken() {
-        return authtoken;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setAuthtoken(String authtoken) {
-        this.authtoken = authtoken;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

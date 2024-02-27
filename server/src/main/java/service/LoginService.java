@@ -1,7 +1,9 @@
 package service;
 
 import dataAccess.AuthDAOMemory;
-import dataAccess.DataAccessException;
+import dataAccess.Exceptions.BadRequestException;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Exceptions.UnauthorizedException;
 import dataAccess.UserDAOMemory;
 import result.LoginResult;
 
@@ -15,12 +17,21 @@ public class LoginService {
         this.userDAOMemory = userDAOMemory;
         this.authDAOMemory = authDAOMemory;
     }
-    public LoginResult login(String username, String password) throws DataAccessException{
-        if (!userDAOMemory.checkUser(username, password)){
-            return new LoginResult("Error: unauthorized");
+    public LoginResult login(String username, String password) throws DataAccessException {
+        if (userDAOMemory.checkUser(username, password)) {
+            String authToken = UUID.randomUUID().toString();
+            authDAOMemory.createAuth(username, authToken);
+            return new LoginResult(username, authToken);
         }
-        String authToken = UUID.randomUUID().toString();
-        authDAOMemory.createAuth(username, authToken);
-        return new LoginResult(username, authToken);
+        if (!userDAOMemory.checkUser(username, password)) {
+            throw new UnauthorizedException("Unauthorized");
+        }
+        if (userDAOMemory.getUser(username) == null || userDAOMemory.getUser(username).password() == null ||
+                username.isEmpty() || username == null || password.isEmpty() || password == null) {
+            throw new BadRequestException("Bad Request");
+        }
+        else {
+            throw new DataAccessException("Invalid request");
+        }
     }
 }

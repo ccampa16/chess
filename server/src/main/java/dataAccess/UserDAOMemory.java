@@ -1,12 +1,12 @@
 package dataAccess;
 
+import dataAccess.Exceptions.DataAccessException;
 import model.UserData;
-import org.eclipse.jetty.server.Authentication;
 
 import java.util.HashSet;
 
 public class UserDAOMemory implements UserDAO {
-    private HashSet<UserData> db;
+    private static HashSet<UserData> db;
     public UserDAOMemory(){
         db = new HashSet<>();
     }

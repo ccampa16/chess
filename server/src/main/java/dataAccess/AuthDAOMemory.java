@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 public class AuthDAOMemory implements AuthDAO{
     //do the dao classes need to handle the fail cases??
-    private HashSet<AuthData> db;
+    private static HashSet<AuthData> db;
     public AuthDAOMemory(){
         db = new HashSet<>();
     }

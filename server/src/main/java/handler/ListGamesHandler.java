@@ -1,7 +1,9 @@
 package handler;
 
 import com.google.gson.Gson;
-import dataAccess.DataAccessException;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Exceptions.UnauthorizedException;
+import request.ListGamesRequest;
 import result.ListGamesResult;
 import service.ListGamesService;
 import spark.Request;
@@ -17,15 +19,12 @@ public class ListGamesHandler {
         try{
             String authToken = req.headers("authorization");
             ListGamesResult listGamesResult = listGamesService.listGames(authToken);
-            if (listGamesResult.getErrorMessage() == null){
-                res.status(200);
-                return new Gson().toJson(listGamesResult);
-            } else {
-                res.status(401);
-                return new Gson().toJson(new ErrorMessage(listGamesResult.getErrorMessage()));
-            }
-            //return new Gson().toJson(listGamesResult);
-        } catch (DataAccessException e){
+            res.status(200);
+            return new Gson().toJson(listGamesResult);
+        } catch (UnauthorizedException e){
+            res.status(401);
+            return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
+        } catch (Exception e){
             res.status(500);
             return new Gson().toJson(new ErrorMessage("Error: description"));
         }
