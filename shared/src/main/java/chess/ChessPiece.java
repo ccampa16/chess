@@ -119,26 +119,12 @@ public class ChessPiece {
     }
     private Collection<ChessMove> getKingMoves(ChessBoard board, int row, int col){
         Collection<ChessMove> validMoves = new ArrayList<>();
-        int[] directionChoices = {-1, 0, 1};
-        for (int i : directionChoices){
-            for (int j : directionChoices) {
-                if (i == 0 && j == 0){ //skip current spot
-                    continue;
-                }
-                int newRow = row + i;
-                int newCol = col + j;
-
-                if (newRow >= 1 && newRow <= 8 && newCol >= 1 && newCol <= 8){
-                    ChessPosition newPosition = new ChessPosition(newRow, newCol);
-                    ChessPiece capturedPiece = board.getPiece(newPosition);
-                    //capture piece or move to empty spot
-                    if (capturedPiece == null || capturedPiece.getTeamColor() != pieceColor){
-                        validMoves.add(new ChessMove(new ChessPosition(row, col), newPosition, null));
-                    }
-                }
-            }
-        }
-        return validMoves;
+        //int[] directionChoices = {-1, 0, 1};
+        int[][] directionChoices = {
+                {-1,-1}, {-1,0}, {-1,1}, {0,-1},
+                {0,1}, {1,-1}, {1,0}, {1,1}
+        };
+        return getKingorKnightMoves(board, row, col, directionChoices);
     }
 
     private Collection<ChessMove> getKnightMoves(ChessBoard board, int row, int col){
@@ -150,6 +136,10 @@ public class ChessPiece {
                 {1, -2}, {1, 2},
                 {2, -1}, {2, 1}
         };
+        return getKingorKnightMoves(board, row, col, directionChoices);
+    }
+    private Collection<ChessMove> getKingorKnightMoves(ChessBoard board, int row, int col, int[][] directionChoices){
+        Collection<ChessMove> validMoves = new ArrayList<>();
         for (int[] direction : directionChoices){
             int newRow = row + direction[0];
             int newCol = col + direction[1];
@@ -165,6 +155,7 @@ public class ChessPiece {
         }
         return validMoves;
     }
+
 
     private Collection<ChessMove> getQueenMoves(ChessBoard board, int row, int col){
         Collection<ChessMove> validMoves = new ArrayList<>();
