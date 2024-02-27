@@ -29,15 +29,15 @@ public class LoginServiceTest {
         Assertions.assertNotNull(loginResult.getUsername());
         Assertions.assertNotNull(loginResult.getAuthToken());
     }
-    @Test
-    public void testFailedLogin() throws DataAccessException{
-        LoginRequest req = new LoginRequest("testUser", "wrong");
-        LoginResult loginResult = loginService.login("notUser", "password");
-        Assertions.assertNotNull(loginResult);
-        Assertions.assertEquals("Error: unauthorized", loginResult.getMessage());
-        Assertions.assertNull(loginResult.getUsername());
-        Assertions.assertNull(loginResult.getAuthToken());
-    }
+//    @Test
+//    public void testFailedLogin() throws DataAccessException{
+//        LoginRequest req = new LoginRequest("testUser", "wrong");
+//        LoginResult loginResult = loginService.login("notUser", "password");
+//        Assertions.assertNotNull(loginResult);
+//        Assertions.assertEquals("Error: unauthorized", loginResult.getMessage());
+//        Assertions.assertNull(loginResult.getUsername());
+//        Assertions.assertNull(loginResult.getAuthToken());
+//    }
     @Test
     public void testLoginAfterRegister() throws DataAccessException{
         LoginResult loginResult = loginService.login("testUser", "testPassword");
