@@ -1,7 +1,9 @@
 package service;
 
-import dataAccess.*;
 import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Memory.AuthDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
+import dataAccess.Memory.UserDAOMemory;
 
 public class ClearService {
     private final UserDAOMemory userDaoMemory;

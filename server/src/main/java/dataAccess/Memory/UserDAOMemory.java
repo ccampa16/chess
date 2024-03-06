@@ -1,6 +1,7 @@
-package dataAccess;
+package dataAccess.Memory;
 
 import dataAccess.Exceptions.DataAccessException;
+import dataAccess.UserDAO;
 import model.UserData;
 
 import java.util.HashSet;

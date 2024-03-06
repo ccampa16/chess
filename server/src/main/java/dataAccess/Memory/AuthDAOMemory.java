@@ -1,10 +1,11 @@
-package dataAccess;
+package dataAccess.Memory;
 
+import dataAccess.AuthDAO;
 import model.AuthData;
 
 import java.util.HashSet;
 
-public class AuthDAOMemory implements AuthDAO{
+public class AuthDAOMemory implements AuthDAO {
     //do the dao classes need to handle the fail cases??
     private static HashSet<AuthData> db;
     public AuthDAOMemory(){

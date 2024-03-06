@@ -1,6 +1,6 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Exceptions.UnauthorizedException;
 

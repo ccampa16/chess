@@ -1,17 +1,15 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Exceptions.UnauthorizedException;
-import dataAccess.GameDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import request.CreateGameRequest;
 import result.CreateGameResult;
 import spark.Request;
-
-import java.util.UUID;
 
 public class CreateServiceTest {
     private CreateGameService createGameService;

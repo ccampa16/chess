@@ -1,6 +1,7 @@
-package dataAccess;
+package dataAccess.Memory;
 
 import chess.ChessGame;
+import dataAccess.GameDAO;
 import model.GameData;
 
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class GameDAOMemory implements GameDAO{
+public class GameDAOMemory implements GameDAO {
     private static HashSet<GameData> db;
     private int currentGameID;
 

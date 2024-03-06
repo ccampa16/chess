@@ -1,8 +1,8 @@
 package server;
 
-import dataAccess.AuthDAOMemory;
-import dataAccess.GameDAOMemory;
-import dataAccess.UserDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
+import dataAccess.Memory.UserDAOMemory;
 import handler.*;
 import service.*;
 import spark.*;

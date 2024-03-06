@@ -1,9 +1,7 @@
 package service;
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.AlreadyTakenException;
-import dataAccess.Exceptions.DataAccessException;
-import dataAccess.Exceptions.UnauthorizedException;
-import dataAccess.UserDAOMemory;
+import dataAccess.Memory.UserDAOMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

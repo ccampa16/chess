@@ -1,18 +1,14 @@
 package service;
 
 import chess.ChessGame;
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
-import dataAccess.Exceptions.UnauthorizedException;
-import dataAccess.GameDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
 import model.GameData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import result.ListGamesResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ListGamesServiceTest {
     private AuthDAOMemory authDAOMemory;

@@ -1,10 +1,10 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.AlreadyTakenException;
 import dataAccess.Exceptions.BadRequestException;
 import dataAccess.Exceptions.DataAccessException;
-import dataAccess.UserDAOMemory;
+import dataAccess.Memory.UserDAOMemory;
 import model.UserData;
 import result.RegisterResult;
 

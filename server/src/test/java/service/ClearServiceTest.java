@@ -1,9 +1,9 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
-import dataAccess.GameDAOMemory;
-import dataAccess.UserDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
+import dataAccess.Memory.UserDAOMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

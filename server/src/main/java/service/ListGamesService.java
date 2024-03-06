@@ -1,13 +1,10 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Exceptions.UnauthorizedException;
-import dataAccess.GameDAOMemory;
-import model.GameData;
+import dataAccess.Memory.GameDAOMemory;
 import result.ListGamesResult;
-
-import java.util.List;
 
 public class ListGamesService {
     private final AuthDAOMemory authDAOMemory;

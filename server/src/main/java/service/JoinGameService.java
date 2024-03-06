@@ -1,11 +1,11 @@
 package service;
 
-import dataAccess.AuthDAOMemory;
+import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.AlreadyTakenException;
 import dataAccess.Exceptions.BadRequestException;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Exceptions.UnauthorizedException;
-import dataAccess.GameDAOMemory;
+import dataAccess.Memory.GameDAOMemory;
 import model.GameData;
 
 public class JoinGameService {
