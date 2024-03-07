@@ -15,12 +15,12 @@ public class SQLUserDAO extends ParentSQL implements UserDAO {
     public SQLUserDAO() throws DataAccessException { //private or public
         super();
         String[] statements = {
-                """
+        """
         CREATE TABLE IF NOT EXISTS user (
-        'username' varchar(200) NOT NULL,
-        'password' varchar(200) NOT NULL,
-        'email' varchar(200) NOT NULL,
-        PRIMARY KEY ('username')
+        `username` varchar(200) NOT NULL,
+        `password` varchar(200) NOT NULL,
+        `email` varchar(200) NOT NULL,
+        PRIMARY KEY (`username`)
         )
        """
         };

@@ -17,12 +17,12 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
         String[] statements = {
             """
             CREATE TABLE IF NOT EXISTS game (
-            'gameID' int NOT NULL,
-            'whiteUsername' varchar(200),
-            'blackUsername' varchar(200),
-            'gameName' varchar(200),
-            'game' varchar(200),
-            PRIMARY KEY ('gameID')
+            `gameID` int NOT NULL AUTO_INCREMENT,
+            `whiteUsername` varchar(256),
+            `blackUsername` varchar(256),
+            `gameName` varchar(256),
+            `game` longtext,
+            PRIMARY KEY (`gameID`)
             )
            """
         };
@@ -35,6 +35,7 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
         try (Connection conn = DatabaseManager.getConnection()){
             String stmt = "INSERT INTO game (whiteUsername, blackUsername, gameName, game)" +
                     "VALUES (?, ?, ?, ?)";
+            String gameJson = new Gson().toJson(newGame.game());
             try (PreparedStatement ps = conn.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS)){
                 ps.setString(1, newGame.whiteUsername());
                 ps.setString(2, newGame.blackUsername());
@@ -43,6 +44,7 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new DataAccessException(e.getMessage());
         }
     }

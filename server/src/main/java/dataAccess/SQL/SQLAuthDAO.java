@@ -16,10 +16,10 @@ public class SQLAuthDAO extends ParentSQL implements AuthDAO {
         String[] statements = { //what does auto increment do?? saw it on pet shop
                 """
             CREATE TABLE IF NOT EXISTS auth (
-            'id' int NOT NULL AUTO_INCREMENT,
-            'authtoken' varchar(200) NOT NULL,
-            'username' varchar(200) NOT NULL,
-            PRIMARY KEY ('id')
+            `id` int NOT NULL AUTO_INCREMENT,
+            `authtoken` varchar(200) NOT NULL,
+            `username` varchar(200) NOT NULL,
+            PRIMARY KEY (`id`)
             )
            """
         };

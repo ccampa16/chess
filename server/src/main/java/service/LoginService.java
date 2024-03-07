@@ -20,21 +20,30 @@ public class LoginService {
         this.authDAO = authDAOMemory;
     }
     public LoginResult login(String username, String password) throws DataAccessException {
-        if (userDAO.checkUser(username, password)) {
-            String authToken = UUID.randomUUID().toString();
-            authDAO.createAuth(username, authToken);
-            return new LoginResult(username, authToken);
-        }
-        if (!userDAO.checkUser(username, password)) {
-            throw new UnauthorizedException("Unauthorized");
-        }
-        if (userDAO.getUser(username) == null || userDAO.getUser(username).password() == null ||
-                username.isEmpty() || username == null || password.isEmpty() || password == null) {
+//        if (userDAO.checkUser(username, password)) {
+//            String authToken = UUID.randomUUID().toString();
+//            authDAO.createAuth(username, authToken);
+//            return new LoginResult(username, authToken);
+//        }
+//        if (!userDAO.checkUser(username, password)) {
+//            throw new UnauthorizedException("Unauthorized");
+//        }
+//        if (userDAO.getUser(username) == null || userDAO.getUser(username).password() == null ||
+//                username.isEmpty() || username == null || password.isEmpty() || password == null) {
+//            throw new BadRequestException("Bad Request");
+//        }
+//        else {
+//            throw new DataAccessException("Invalid request");
+//        }
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()){
             throw new BadRequestException("Bad Request");
         }
-        else {
-            throw new DataAccessException("Invalid request");
+        if (!userDAO.checkUser(username, password)){
+            throw new UnauthorizedException("Unauthorized");
         }
+           String authToken = UUID.randomUUID().toString();
+           authDAO.createAuth(username, authToken);
+           return new LoginResult(username, authToken);
     }
 }
 //        if (userDAOMemory.checkUser(username, password)) {

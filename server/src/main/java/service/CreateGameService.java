@@ -28,8 +28,8 @@ public class CreateGameService {
         if(req.getGameName() == null){
             throw new BadRequestException("Bad request");
         }
-        int gameID = gameDAO.incrementGameID();
-        GameData newGame = new GameData(gameID, null, null, req.getGameName(), new ChessGame());
+        //int gameID = gameDAO.incrementGameID();
+        GameData newGame = new GameData(0, null, null, req.getGameName(), new ChessGame());
         gameDAO.createGame(newGame);
         return new CreateGameResult(newGame.gameID());
     }
