@@ -1,5 +1,7 @@
 package service;
 
+import dataAccess.Interface.AuthDAO;
+import dataAccess.Interface.UserDAO;
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.AlreadyTakenException;
 import dataAccess.Exceptions.BadRequestException;
@@ -11,24 +13,24 @@ import result.RegisterResult;
 import java.util.UUID;
 
 public class RegisterService {
-    private final UserDAOMemory userDAOMemory;
-    private final AuthDAOMemory authDAOMemory;
+    private final UserDAO userDAO;
+    private final AuthDAO authDAO;
 
-    public RegisterService(UserDAOMemory userDAOMemory, AuthDAOMemory authDAOMemory) {
-        this.userDAOMemory = userDAOMemory;
-        this.authDAOMemory = authDAOMemory;
+    public RegisterService(UserDAO userDAO, AuthDAO authDAO) {
+        this.userDAO = userDAO;
+        this.authDAO = authDAO;
     }
     public RegisterResult register(String username, String password, String email) throws DataAccessException{
         if (username == null || password == null || email == null){
             throw new BadRequestException("Bad request");
         }
-        UserData newUser = userDAOMemory.getUser(username);
+        UserData newUser = userDAO.getUser(username);
         if (newUser != null){
             throw new AlreadyTakenException("Already taken");
         }
-        userDAOMemory.createUser(username, password, email);
+        userDAO.createUser(username, password, email);
         String authToken = generateAuthToken();
-        authDAOMemory.createAuth(username, authToken);
+        authDAO.createAuth(username, authToken);
         return new RegisterResult(username, authToken);
 
     }

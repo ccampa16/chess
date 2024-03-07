@@ -1,6 +1,6 @@
 package dataAccess.Memory;
 
-import dataAccess.AuthDAO;
+import dataAccess.Interface.AuthDAO;
 import model.AuthData;
 
 import java.util.HashSet;

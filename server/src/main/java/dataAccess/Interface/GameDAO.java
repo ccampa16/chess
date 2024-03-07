@@ -1,4 +1,4 @@
-package dataAccess;
+package dataAccess.Interface;
 import dataAccess.Exceptions.DataAccessException;
 import model.GameData;
 
@@ -10,4 +10,5 @@ public interface GameDAO {
     GameData getGame(int gameID) throws DataAccessException;
     void updateGame(GameData updatedGame) throws DataAccessException;
     void clear() throws DataAccessException;
+    int incrementGameID() throws DataAccessException;
 }

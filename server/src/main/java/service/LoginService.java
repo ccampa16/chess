@@ -1,5 +1,7 @@
 package service;
 
+import dataAccess.Interface.AuthDAO;
+import dataAccess.Interface.UserDAO;
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.BadRequestException;
 import dataAccess.Exceptions.DataAccessException;
@@ -10,23 +12,23 @@ import result.LoginResult;
 import java.util.UUID;
 
 public class LoginService {
-    private final UserDAOMemory userDAOMemory;
-    private final AuthDAOMemory authDAOMemory;
+    private final UserDAO userDAO;
+    private final AuthDAO authDAO;
 
-    public LoginService(UserDAOMemory userDAOMemory, AuthDAOMemory authDAOMemory) {
-        this.userDAOMemory = userDAOMemory;
-        this.authDAOMemory = authDAOMemory;
+    public LoginService(UserDAO userDAO, AuthDAO authDAOMemory) {
+        this.userDAO = userDAO;
+        this.authDAO = authDAOMemory;
     }
     public LoginResult login(String username, String password) throws DataAccessException {
-        if (userDAOMemory.checkUser(username, password)) {
+        if (userDAO.checkUser(username, password)) {
             String authToken = UUID.randomUUID().toString();
-            authDAOMemory.createAuth(username, authToken);
+            authDAO.createAuth(username, authToken);
             return new LoginResult(username, authToken);
         }
-        if (!userDAOMemory.checkUser(username, password)) {
+        if (!userDAO.checkUser(username, password)) {
             throw new UnauthorizedException("Unauthorized");
         }
-        if (userDAOMemory.getUser(username) == null || userDAOMemory.getUser(username).password() == null ||
+        if (userDAO.getUser(username) == null || userDAO.getUser(username).password() == null ||
                 username.isEmpty() || username == null || password.isEmpty() || password == null) {
             throw new BadRequestException("Bad Request");
         }
@@ -35,3 +37,19 @@ public class LoginService {
         }
     }
 }
+//        if (userDAOMemory.checkUser(username, password)) {
+//            String authToken = UUID.randomUUID().toString();
+//            authDAOMemory.createAuth(username, authToken);
+//            return new LoginResult(username, authToken);
+//        }
+//        if (!userDAOMemory.checkUser(username, password)) {
+//            throw new UnauthorizedException("Unauthorized");
+//        }
+//        if (userDAOMemory.getUser(username) == null || userDAOMemory.getUser(username).password() == null ||
+//                username.isEmpty() || username == null || password.isEmpty() || password == null) {
+//            throw new BadRequestException("Bad Request");
+//        }
+//        else {
+//            throw new DataAccessException("Invalid request");
+//        }
+//    }

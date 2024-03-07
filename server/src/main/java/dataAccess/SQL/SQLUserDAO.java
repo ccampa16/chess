@@ -2,7 +2,7 @@ package dataAccess.SQL;
 
 import dataAccess.DatabaseManager;
 import dataAccess.Exceptions.DataAccessException;
-import dataAccess.UserDAO;
+import dataAccess.Interface.UserDAO;
 import model.UserData;
 
 import java.sql.Connection;
@@ -11,7 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLUserDAO extends ParentSQL implements UserDAO {
-    private SQLUserDAO() throws DataAccessException { //private or public
+    public SQLUserDAO() throws DataAccessException { //private or public
+        super();
         String[] statements = {
             """
             CREATE TABLE IF NOT EXISTS user (

@@ -1,7 +1,6 @@
 package dataAccess.Memory;
 
-import chess.ChessGame;
-import dataAccess.GameDAO;
+import dataAccess.Interface.GameDAO;
 import model.GameData;
 
 
@@ -48,6 +47,7 @@ public class GameDAOMemory implements GameDAO {
         db.clear();
         currentGameID = 1;
     }
+   @Override
     public int incrementGameID(){
         currentGameID++;
         return currentGameID;

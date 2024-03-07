@@ -1,18 +1,19 @@
 package service;
 
+import dataAccess.Interface.AuthDAO;
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Exceptions.UnauthorizedException;
 
 public class LogoutService {
-    private final AuthDAOMemory authDAOMemory;
-    public LogoutService(AuthDAOMemory authDAOMemory){
-        this.authDAOMemory = authDAOMemory;
+    private final AuthDAO authDAO;
+    public LogoutService(AuthDAO authDAO){
+        this.authDAO = authDAO;
     }
     public void logout(String authtoken) throws DataAccessException{
-        if (!authDAOMemory.checkAuth(authtoken)){
+        if (!authDAO.checkAuth(authtoken)){
             throw new UnauthorizedException("unauthorized");
         }
-        authDAOMemory.deleteAuth(authtoken);
+        authDAO.deleteAuth(authtoken);
     }
 }
