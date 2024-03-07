@@ -4,6 +4,7 @@ import dataAccess.DatabaseManager;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Interface.UserDAO;
 import model.UserData;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,14 +15,14 @@ public class SQLUserDAO extends ParentSQL implements UserDAO {
     public SQLUserDAO() throws DataAccessException { //private or public
         super();
         String[] statements = {
-            """
-            CREATE TABLE IF NOT EXISTS user (
-            'username' varchar(200) NOT NULL,
-            'password' varchar(200) NOT NULL,
-            'email' varchar(200) NOT NULL,
-            PRIMARY KEY ('username')
-            )
-           """
+                """
+        CREATE TABLE IF NOT EXISTS user (
+        'username' varchar(200) NOT NULL,
+        'password' varchar(200) NOT NULL,
+        'email' varchar(200) NOT NULL,
+        PRIMARY KEY ('username')
+        )
+       """
         };
         createDatabase(statements);
     }
@@ -53,10 +54,12 @@ public class SQLUserDAO extends ParentSQL implements UserDAO {
     @Override
     public UserData createUser(String username, String password, String email) throws DataAccessException {
         try (Connection conn = DatabaseManager.getConnection()){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(password);
             String stmt = "INSERT INTO user (username, password, email) VALUES (?, ?, ?)";
             try (PreparedStatement ps = conn.prepareStatement(stmt, PreparedStatement.RETURN_GENERATED_KEYS)){
                 ps.setString(1, username);
-                ps.setString(2, username);
+                ps.setString(2, hashedPassword);
                 ps.setString(3, email);
                 ps.executeUpdate();
                 return new UserData(username, password, email);
@@ -69,13 +72,16 @@ public class SQLUserDAO extends ParentSQL implements UserDAO {
     @Override
     public boolean checkUser(String username, String password) throws DataAccessException {
         try(Connection conn = DatabaseManager.getConnection()){
-            String stmt = "SELECT * FROM user WHERE username = ? AND password = ?";
+            String stmt = "SELECT password FROM user WHERE username = ?";
             try (PreparedStatement ps = conn.prepareStatement(stmt)){
                 ps.setString(1, username);
-                ps.setString(2, password);
+                //ps.setString(2, password);
                 try (ResultSet rs = ps.executeQuery()){
                     if (rs.next()){
-                        return true;
+                        String hashedPassword = rs.getString("password");
+                        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                        return encoder.matches(password, hashedPassword);
+                        //return true;
                     }
                 }
             }
