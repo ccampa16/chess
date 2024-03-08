@@ -31,17 +31,22 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
     }
 
     @Override
-    public void createGame(GameData newGame) throws DataAccessException {
+    public int createGame(GameData newGame) throws DataAccessException {
         try (Connection conn = DatabaseManager.getConnection()){
             String stmt = "INSERT INTO game (whiteUsername, blackUsername, gameName, game)" +
                     "VALUES (?, ?, ?, ?)";
-            String gameJson = new Gson().toJson(newGame.game());
+            //String gameJson = new Gson().toJson(newGame.game());
             try (PreparedStatement ps = conn.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS)){
                 ps.setString(1, newGame.whiteUsername());
                 ps.setString(2, newGame.blackUsername());
                 ps.setString(3, newGame.gameName());
                 ps.setString(4, new Gson().toJson(newGame.game()));
                 ps.executeUpdate();
+                var rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+                return 0;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

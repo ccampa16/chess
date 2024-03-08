@@ -30,8 +30,8 @@ public class CreateGameService {
         }
         //int gameID = gameDAO.incrementGameID();
         GameData newGame = new GameData(0, null, null, req.getGameName(), new ChessGame());
-        gameDAO.createGame(newGame);
-        return new CreateGameResult(newGame.gameID());
+        int gameID = gameDAO.createGame(newGame);
+        return new CreateGameResult(gameID);
     }
 
 }
