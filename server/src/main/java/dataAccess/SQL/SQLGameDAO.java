@@ -125,21 +125,21 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
             throw new DataAccessException(e.getMessage());
         }
     }
-    @Override
-    public int incrementGameID() throws DataAccessException{
-        try (Connection conn = DatabaseManager.getConnection()){
-            String stmt = "SELECT MAX(gameID) AS maxID FROM game";
-            try (PreparedStatement ps = conn.prepareStatement(stmt)){
-                try (ResultSet rs = ps.executeQuery()){
-                    if (rs.next()){
-                        return rs.getInt("maxID") + 1;
-                    } else {
-                        return 1;
-                    }
-                }
-            }
-        } catch (SQLException e){
-            throw new DataAccessException(e.getMessage());
-        }
-    }
+//    @Override
+//    public int incrementGameID() throws DataAccessException{
+//        try (Connection conn = DatabaseManager.getConnection()){
+//            String stmt = "SELECT MAX(gameID) AS maxID FROM game";
+//            try (PreparedStatement ps = conn.prepareStatement(stmt)){
+//                try (ResultSet rs = ps.executeQuery()){
+//                    if (rs.next()){
+//                        return rs.getInt("maxID") + 1;
+//                    } else {
+//                        return 1;
+//                    }
+//                }
+//            }
+//        } catch (SQLException e){
+//            throw new DataAccessException(e.getMessage());
+//        }
+//    }
 }

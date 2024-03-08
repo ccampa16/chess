@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.AlreadyTakenException;
 import dataAccess.Memory.UserDAOMemory;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import request.RegisterRequest;
 import result.RegisterResult;
+import service.RegisterService;
 
 import static org.junit.jupiter.api.Assertions.*;
 

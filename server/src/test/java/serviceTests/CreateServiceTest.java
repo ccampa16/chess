@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import request.CreateGameRequest;
 import result.CreateGameResult;
+import service.CreateGameService;
 import spark.Request;
 
 public class CreateServiceTest {

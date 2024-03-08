@@ -10,5 +10,5 @@ public interface GameDAO {
     GameData getGame(int gameID) throws DataAccessException;
     void updateGame(GameData updatedGame) throws DataAccessException;
     void clear() throws DataAccessException;
-    int incrementGameID() throws DataAccessException;
+//    int incrementGameID() throws DataAccessException;
 }

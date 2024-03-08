@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 
 import chess.ChessGame;
 import dataAccess.Memory.AuthDAOMemory;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import result.ListGamesResult;
+import service.ListGamesService;
 
 public class ListGamesServiceTest {
     private AuthDAOMemory authDAOMemory;

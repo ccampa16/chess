@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import request.LoginRequest;
 import result.LoginResult;
+import service.LoginService;
 
 public class LoginServiceTest {
     private LoginService loginService;

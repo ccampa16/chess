@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
@@ -7,6 +7,7 @@ import model.GameData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.JoinGameService;
 
 public class JoinGameTests {
     private AuthDAOMemory authDAOMemory;

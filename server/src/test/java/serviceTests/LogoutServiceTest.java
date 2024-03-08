@@ -1,4 +1,4 @@
-package service;
+package serviceTests;
 
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Exceptions.DataAccessException;
@@ -6,6 +6,7 @@ import dataAccess.Exceptions.UnauthorizedException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.LogoutService;
 
 public class LogoutServiceTest {
     private LogoutService logoutService;
