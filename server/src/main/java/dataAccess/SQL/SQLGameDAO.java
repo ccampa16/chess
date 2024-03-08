@@ -113,6 +113,7 @@ public class SQLGameDAO extends ParentSQL implements GameDAO {
                 ps.setString(3, updatedGame.gameName());
                 ps.setString(4, new Gson().toJson(updatedGame.game()));
                 ps.setInt(5, updatedGame.gameID());
+                ps.executeUpdate();
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());

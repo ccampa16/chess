@@ -21,9 +21,7 @@ public class CreateGameService {
     }
     public CreateGameResult createGame(CreateGameRequest req, String authtoken) throws DataAccessException {
         if (!authDAO.checkAuth(authtoken)){
-           // return new CreateGameResult(0, "Error: unauthorized");
             throw new UnauthorizedException("unauthorized");
-
         }
         if(req.getGameName() == null){
             throw new BadRequestException("Bad request");
