@@ -90,7 +90,20 @@ public class Server {
         JoinGameHandler joinGameHandler = new JoinGameHandler(joinGameService);
         Spark.put("/game", (request, response) -> joinGameHandler.joinGame(request, response));
 
+    }
 
+
+    public void stop() {
+        Spark.stop();
+        Spark.awaitStop();
+    }
+    public static void main(String[] args) {
+        new Server().run(8080);
+    }
+}
+
+
+///
 //        Spark.before((req, res) -> System.out.println("Executing route: " + req.pathInfo()));
 //
 //        //is the pet shop example a way of doing it without handler classes? would that work with having so many
@@ -121,17 +134,3 @@ public class Server {
 //        JoinGameService joinGameService = new JoinGameService(new GameDAOMemory(), new AuthDAOMemory());
 //        JoinGameHandler joinGameHandler = new JoinGameHandler(joinGameService);
 //        Spark.put("/game", (request, response) -> joinGameHandler.joinGame(request, response));
-    }
-
-
-    public void stop() {
-        Spark.stop();
-        Spark.awaitStop();
-    }
-    public static void main(String[] args) {
-        new Server().run(8080);
-    }
-}
-
-
-///

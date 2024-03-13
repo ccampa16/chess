@@ -153,18 +153,18 @@ public class Client {
     }
 
     private void login(Scanner scanner){
-        System.out.println("Enter username: ");
+        System.out.print("Enter username: ");
         String username = scanner.nextLine();
-        System.out.println("Enter password: ");
+        System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
         //imp
         loggedIn = true;
     }
     private void register(Scanner scanner){
-        System.out.println("Enter username: ");
+        System.out.print("Enter username: ");
         String username = scanner.nextLine();
-        System.out.println("Enter password: ");
+        System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
         //imp
@@ -175,7 +175,7 @@ public class Client {
         loggedIn = false;
     }
     private void createGame(Scanner scanner){
-        System.out.println("Enter the name of your new game: ");
+        System.out.print("Enter the name of your new game: ");
         String gameName = scanner.nextLine();
 
         //imp
@@ -183,7 +183,7 @@ public class Client {
     private void listGames(){}
     private void joinGame(Scanner scanner){
         //listGames();
-        System.out.println("Enter the number of the game you want to join: ");
+        System.out.print("Enter the number of the game you want to join: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
 
@@ -191,7 +191,7 @@ public class Client {
     }
     private void joinObserver(Scanner scanner){
         //listGames();
-        System.out.println("Enter the number of the game you want to observe: ");
+        System.out.print("Enter the number of the game you want to observe: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
 
