@@ -19,9 +19,31 @@ public class ServerFacade {
     public ServerFacade(String serverUrl) {
         this.serverUrl = serverUrl;
     }
+    public void run(){
+
+    }
     public LoginResult login(LoginRequest request) throws Exception {
         return makeRequest("POST", "/session", request, LoginResult.class);
     }
+    public RegisterResult register(RegisterRequest request) throws Exception {
+        return makeRequest("POST", "/user", request, RegisterResult.class);
+    }
+    public LogoutResult logout(LogoutRequest request) throws Exception {
+        return makeRequest("DELETE", "/session", request, LogoutResult.class);
+    }
+    public CreateGameResult createGame(CreateGameRequest request) throws Exception {
+        return makeRequest("POST", "/game", request, CreateGameResult.class);
+    }
+    public ListGamesResult listGames(ListGamesRequest request) throws Exception {
+        return makeRequest("GET", "/game", request, ListGamesResult.class);
+    }
+    public JoinGameResult joinGame(JoinGameRequest request) throws Exception {
+        return makeRequest("PUT", "/game", request, JoinGameResult.class);
+    }
+    public ClearResult clear(ClearRequest request) throws Exception {
+        return makeRequest("DELETE", "/db", request, ClearResult.class);
+    }
+
     private <T> T makeRequest(String method, String path, Object request, Class<T> resultClass) throws Exception {
         try {
             URL url = (new URI(serverUrl + path)).toURL();

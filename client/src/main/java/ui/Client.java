@@ -134,7 +134,7 @@ public class Client {
         }
     }
     private void displayHelpPreLogin(){
-        System.out.println("Welcome to Chess! Before you can start, please login or register.");
+        System.out.println("Before you can start, please login or register.");
         System.out.println("Here are your command options:");
         System.out.println("1. Help - Display this help message");
         System.out.println("2. Quit - Exit the program");
@@ -142,7 +142,7 @@ public class Client {
         System.out.println("4. Register - Register a new account");
     }
     private void displayHelpPostLogin() {
-        System.out.println("Welcome to Chess!");
+        //System.out.println("Welcome to Chess!");
         System.out.println("Here are your command options:");
         System.out.println("1. Help - Display this help message");
         System.out.println("2. Logout - Logout from your current account");
