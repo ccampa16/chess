@@ -1,14 +1,22 @@
 package ui;
 
+import model.GameData;
+import model.UserData;
+import request.*;
+import result.*;
 import serverfacade.ServerFacade;
 
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
     private final ServerFacade serverFacade;
     private final String serverUrl;
     private boolean loggedIn = false;
+    private UserData userData;
+    private String authToken;
     public Client(String serverUrl){
         this.serverUrl = serverUrl;
         this.serverFacade = new ServerFacade(serverUrl);
@@ -157,44 +165,126 @@ public class Client {
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-
+        //create login request object from username and password
+        //call server facade method with the request
+        LoginRequest request = new LoginRequest(username, password);
+        try{
+            LoginResult result = serverFacade.login(request);
+            System.out.println("You are logged in:)");
+            loggedIn = true;
+            authToken = result.getAuthToken();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //imp
-        loggedIn = true;
     }
     private void register(Scanner scanner){
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
 
+        RegisterRequest request = new RegisterRequest(username, password, email);
+        try {
+            RegisterResult result = serverFacade.register(request);
+            System.out.println("You are registered:)");
+            loggedIn = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //imp
-        loggedIn = true;
     }
     private void logout(){
+        LogoutRequest request = new LogoutRequest(authToken); //requires an authtoken
+        try {
+            LogoutResult result = serverFacade.logout(request);
+            System.out.println("Goodbye");
+            loggedIn = false;
+            authToken = null; //??
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //imp
-        loggedIn = false;
     }
     private void createGame(Scanner scanner){
         System.out.print("Enter the name of your new game: ");
         String gameName = scanner.nextLine();
-
+        CreateGameRequest request = new CreateGameRequest(gameName);
+        try {
+            CreateGameResult result = serverFacade.createGame(request);
+            System.out.println("Your game is created");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //imp
     }
-    private void listGames(){}
+    private void listGames(){
+        ListGamesRequest request = new ListGamesRequest(authToken); //requires an authtoken
+        try {
+            ListGamesResult result = serverFacade.listGames(request);
+            System.out.println("List of games: ");
+            List<GameData> games = result.getGames();
+            if (games != null){
+                for (int i = 0; i < games.size(); i++){
+                    GameData game = games.get(i);
+                    System.out.println("Game " + (i+1) + ": " + game.gameName());
+                }
+            } else {
+                System.out.println("No games available.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void joinGame(Scanner scanner){
-        //listGames();
+        listGames();
         System.out.print("Enter the number of the game you want to join: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
+//        System.out.println("Please enter your color: 'BLACK' or 'WHITE'");
+//        String color = scanner.nextLine().trim().toUpperCase(); //do i need to make sure they enter an accepted string??
+        //scanner.nextLine();
+        String color = null;
+        boolean validColor = false;
+        while (!validColor){
+            System.out.println("Please enter your color: 'BLACK' or 'WHITE'");
+            color = scanner.nextLine().trim().toUpperCase();
+            if (color.equals("BLACK") || color.equals("WHITE")){
+                validColor = true;
+            } else {
+                System.out.println("Invalid color. Please enter 'BLACK' or 'WHITE'");
+            }
+        }
 
+        JoinGameRequest request = new JoinGameRequest(color, gameNum);
+        try {
+            JoinGameResult result = serverFacade.joinGame(request);
+            System.out.println("You have joined");
+            //ChessBoard.drawChessBoard();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //call ui.ChessBoard !!!
         //imp
     }
     private void joinObserver(Scanner scanner){
-        //listGames();
+        listGames();
         System.out.print("Enter the number of the game you want to observe: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
-
+        String color = null;
+        JoinGameRequest request = new JoinGameRequest(color, gameNum); //can I create another constructor?
+        try {
+            JoinGameResult result = serverFacade.joinGame(request);
+            System.out.println("You have joined");
+            //ChessBoard.drawChessBoard();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //c
+        //call ui.ChessBoard
         //imp
     }
 }
