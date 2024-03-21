@@ -3,14 +3,14 @@ package clientTests;
 import dataAccess.Exceptions.DataAccessException;
 import model.AuthData;
 import org.junit.jupiter.api.*;
-import request.ClearRequest;
-import request.LoginRequest;
-import request.RegisterRequest;
+import request.*;
 import result.ClearResult;
 import result.LoginResult;
 import result.RegisterResult;
+import result.*;
 import server.Server;
 import serverfacade.ServerFacade;
+import dataAccess.Exceptions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +19,8 @@ public class ServerFacadeTests {
 
     private static Server server;
     static ServerFacade facade;
+    private String auth;
+    private int gameID;
 
 
     @BeforeAll
@@ -29,7 +31,24 @@ public class ServerFacadeTests {
         facade = new ServerFacade("http://localhost:" + port);
     }
     @BeforeEach
+    public void setUp(){
+        try {
+            RegisterResult result = facade.register(new RegisterRequest("user", "pass", "email"));
+            auth = result.getAuthToken();
+            //CreateGameResult createGameResult = facade.createGame(new CreateGameRequest("newGame"));
+            //gameID = createGameResult.getGameID();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    @AfterEach
     public void clear() {
+        try {
+            facade.clear(new ClearRequest());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -49,11 +68,19 @@ public class ServerFacadeTests {
         }
     }
     @Test
-    public void loginFail() throws DataAccessException {
+    public void loginFail() throws Exception {
+        LoginRequest request = new LoginRequest("invalidUser", "pass1");
+        try {
+            Assertions.assertThrows(Exception.class, () -> {
+                facade.login(request);
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     @Test
     void register() throws Exception {
-        RegisterRequest request = new RegisterRequest("user", "pass", "email");
+        RegisterRequest request = new RegisterRequest("newUser", "newPass", "email");
         try {
             RegisterResult result = facade.register(request);
             assertNotNull(result);
@@ -64,19 +91,26 @@ public class ServerFacadeTests {
     }
     @Test
     void registerFail() throws Exception {
-
+        RegisterRequest request = new RegisterRequest("user", "pass", "email");
+        assertThrows(Exception.class, ()->{facade.register(request);
+        });
     }
     @Test
     void logout() throws Exception {
-
+        //assertDoesNotThrow(() -> facade.logout(new LogoutRequest(auth)));
     }
     @Test
     void logoutFail() throws Exception {
-
+        String invalidAuth = "invalid";
+        assertThrows(Exception.class, () -> {
+            facade.logout(new LogoutRequest(invalidAuth));
+        });
     }
     @Test
     void createGame() throws Exception {
-
+//        CreateGameRequest request = new CreateGameRequest("newGame");
+//        CreateGameResult result = facade.createGame(request);
+//        assertNotNull(result);
     }
     @Test
     void createGameFail() throws Exception {
@@ -84,7 +118,9 @@ public class ServerFacadeTests {
     }
     @Test
     void listGame() throws Exception {
-
+//        ListGamesRequest request = new ListGamesRequest(auth);
+//        ListGamesResult result = facade.listGames(request);
+//        assertNotNull(result);
     }
     @Test
     void listGameFail() throws Exception {
@@ -100,6 +136,9 @@ public class ServerFacadeTests {
     }
     @Test
     void observeGame() throws Exception {
+//        JoinGameRequest request = new JoinGameRequest(null, gameID);
+//        JoinGameResult result = facade.joinGame(request);
+//        assertNotNull(result);
 
     }
     @Test

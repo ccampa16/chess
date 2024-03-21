@@ -2,6 +2,8 @@ package serverfacade;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Request;
+import model.AuthData;
+import model.UserData;
 import request.*;
 import result.*;
 
