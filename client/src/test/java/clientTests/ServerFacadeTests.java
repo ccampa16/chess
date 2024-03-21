@@ -5,8 +5,10 @@ import model.AuthData;
 import org.junit.jupiter.api.*;
 import request.ClearRequest;
 import request.LoginRequest;
+import request.RegisterRequest;
 import result.ClearResult;
 import result.LoginResult;
+import result.RegisterResult;
 import server.Server;
 import serverfacade.ServerFacade;
 
@@ -24,16 +26,10 @@ public class ServerFacadeTests {
         server = new Server();
         var port = server.run(0);
         System.out.println("Started test HTTP server on " + port);
-        facade = new ServerFacade(port);
+        facade = new ServerFacade("http://localhost:" + port);
     }
     @BeforeEach
     public void clear() {
-        //clear database
-//        ClearRequest request = new ClearRequest();
-//        try {
-//            ClearResult result = facade.clear(request);
-//            assertTrue(result.i);
-//        }
     }
 
 
@@ -54,9 +50,12 @@ public class ServerFacadeTests {
     }
     @Test
     public void loginFail() throws DataAccessException {
-        LoginRequest request = new LoginRequest("invalidUser", "invalidPass");
+    }
+    @Test
+    void register() throws Exception {
+        RegisterRequest request = new RegisterRequest("user", "pass", "email");
         try {
-            LoginResult result = facade.login(request);
+            RegisterResult result = facade.register(request);
             assertNotNull(result);
             assertNotNull(result.getAuthToken());
         } catch (Exception e) {
@@ -64,14 +63,48 @@ public class ServerFacadeTests {
         }
     }
     @Test
-    void register() throws Exception {
-        //var authData = facade.register("player1", "password", "p1@email.com");
-        //assertTrue(authData.getAuthToken().length() > 10);
-    }
+    void registerFail() throws Exception {
 
+    }
     @Test
-    public void sampleTest() {
-        assertTrue(true);
+    void logout() throws Exception {
+
+    }
+    @Test
+    void logoutFail() throws Exception {
+
+    }
+    @Test
+    void createGame() throws Exception {
+
+    }
+    @Test
+    void createGameFail() throws Exception {
+
+    }
+    @Test
+    void listGame() throws Exception {
+
+    }
+    @Test
+    void listGameFail() throws Exception {
+
+    }
+    @Test
+    void joinGame() throws Exception {
+
+    }
+    @Test
+    void joinGameFail() throws Exception {
+
+    }
+    @Test
+    void observeGame() throws Exception {
+
+    }
+    @Test
+    void observeGameFail() throws Exception {
+
     }
 
 }

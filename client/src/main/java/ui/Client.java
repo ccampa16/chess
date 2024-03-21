@@ -7,6 +7,7 @@ import result.*;
 import serverfacade.ServerFacade;
 
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -26,13 +27,9 @@ public class Client {
         if (args.length == 1) {
             serverUrl = args[0];
         }
-
         new Client(serverUrl).run();
     }
     public void run() {
-        //System.out.println("\uD83D\uDC36 Welcome to the pet store. Sign in to start.");
-        //System.out.print(client.help());
-
         Scanner scanner = new Scanner(System.in);
         while(true){
             if(!loggedIn){
@@ -41,45 +38,8 @@ public class Client {
                 postLoginUI(scanner);
             }
         }
-//        var result = "";
-//        while (!result.equals("quit")) {
-//            printPrompt();
-//            String line = scanner.nextLine();
-//
-//            try {
-//                result = eval(line);
-//                System.out.print(BLUE + result);
-//            } catch (Throwable e) {
-//                var msg = e.toString();
-//                System.out.print(msg);
-//            }
-//        }
-//        System.out.println();
     }
 
-//    pet shop stuff
-//    public void notify(Notification notification) {
-//        System.out.println(RED + notification.message());
-//        printPrompt();
-//    }
-//
-//    private void printPrompt() {
-//        System.out.print("\n" + RESET + ">>> " + GREEN);
-//    }
-//
-//    public String eval(String input){
-//        try {
-//            var tokens = input.toLowerCase().split(" ");
-//            var cmd = (tokens.length > 0) ? tokens[0] : "help";
-//            var params = Arrays.copyOfRange(tokens, 1, tokens.length);
-//            return switch (cmd){
-//                case "register" -> register(params);
-//                case "login" -> login(params);
-//                case "logout" -> logout(params);
-//                case ""
-//            }
-//        }
-//    }
     private void preLoginUI(Scanner scanner){
         System.out.println("Welcome to Chess!");
         System.out.println("Choose an option:");
@@ -150,7 +110,6 @@ public class Client {
         System.out.println("4. Register - Register a new account");
     }
     private void displayHelpPostLogin() {
-        //System.out.println("Welcome to Chess!");
         System.out.println("Here are your command options:");
         System.out.println("1. Help - Display this help message");
         System.out.println("2. Logout - Logout from your current account");
@@ -165,18 +124,15 @@ public class Client {
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-        //create login request object from username and password
-        //call server facade method with the request
         LoginRequest request = new LoginRequest(username, password);
         try{
             LoginResult result = serverFacade.login(request);
             System.out.println("You are logged in:)");
-            loggedIn = true;
             authToken = result.getAuthToken();
+            loggedIn = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //imp
     }
     private void register(Scanner scanner){
         System.out.print("Enter username: ");
@@ -190,11 +146,11 @@ public class Client {
         try {
             RegisterResult result = serverFacade.register(request);
             System.out.println("You are registered:)");
+            authToken = result.getAuthToken();
             loggedIn = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //imp
     }
     private void logout(){
         LogoutRequest request = new LogoutRequest(authToken); //requires an authtoken
@@ -206,7 +162,6 @@ public class Client {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //imp
     }
     private void createGame(Scanner scanner){
         System.out.print("Enter the name of your new game: ");
@@ -218,7 +173,6 @@ public class Client {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //imp
     }
     private void listGames(){
         ListGamesRequest request = new ListGamesRequest(authToken); //requires an authtoken
@@ -243,9 +197,6 @@ public class Client {
         System.out.print("Enter the number of the game you want to join: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
-//        System.out.println("Please enter your color: 'BLACK' or 'WHITE'");
-//        String color = scanner.nextLine().trim().toUpperCase(); //do i need to make sure they enter an accepted string??
-        //scanner.nextLine();
         String color = null;
         boolean validColor = false;
         while (!validColor){
@@ -262,12 +213,13 @@ public class Client {
         try {
             JoinGameResult result = serverFacade.joinGame(request);
             System.out.println("You have joined");
-            //ChessBoard.drawChessBoard();
+            chess.ChessBoard board = new chess.ChessBoard();
+            board.resetBoard();
+
+            UiChessBoard.drawChessBoard(System.out, board); //what chess board method should i be calling
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //call ui.ChessBoard !!!
-        //imp
     }
     private void joinObserver(Scanner scanner){
         listGames();
@@ -275,16 +227,16 @@ public class Client {
         int gameNum = scanner.nextInt();
         scanner.nextLine();
         String color = null;
-        JoinGameRequest request = new JoinGameRequest(color, gameNum); //can I create another constructor?
+        JoinGameRequest request = new JoinGameRequest(color, gameNum);
         try {
             JoinGameResult result = serverFacade.joinGame(request);
             System.out.println("You have joined");
-            //ChessBoard.drawChessBoard();
+            chess.ChessBoard board = new chess.ChessBoard();
+            board.resetBoard();
+            UiChessBoard.drawChessBoard(System.out, board);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //c
-        //call ui.ChessBoard
-        //imp
+
     }
 }
