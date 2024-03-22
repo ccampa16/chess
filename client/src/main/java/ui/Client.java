@@ -128,10 +128,11 @@ public class Client {
         try{
             LoginResult result = serverFacade.login(request);
             System.out.println("You are logged in:)");
-            authToken = result.getAuthToken();
+            serverFacade.setAuthtoken(result.getAuthToken());
+            //authToken = result.getAuthToken();
             loggedIn = true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
     private void register(Scanner scanner){
@@ -146,19 +147,20 @@ public class Client {
         try {
             RegisterResult result = serverFacade.register(request);
             System.out.println("You are registered:)");
-            authToken = result.getAuthToken();
+            serverFacade.setAuthtoken(result.getAuthToken());
+            //authToken = result.getAuthToken();
             loggedIn = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     private void logout(){
-        LogoutRequest request = new LogoutRequest(authToken); //requires an authtoken
+        LogoutRequest request = new LogoutRequest(serverFacade.getAuthtoken()); //requires an authtoken
         try {
             LogoutResult result = serverFacade.logout(request);
             System.out.println("Goodbye");
             loggedIn = false;
-            authToken = null; //??
+            serverFacade.setAuthtoken(null);  //??
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -175,21 +177,23 @@ public class Client {
         }
     }
     private void listGames(){
-        ListGamesRequest request = new ListGamesRequest(authToken); //requires an authtoken
+        ListGamesRequest request = new ListGamesRequest(serverFacade.getAuthtoken()); //requires an authtoken
         try {
-            ListGamesResult result = serverFacade.listGames(request);
+            ListGamesResult result = serverFacade.listGames();
             System.out.println("List of games: ");
             List<GameData> games = result.getGames();
             if (games != null){
                 for (int i = 0; i < games.size(); i++){
                     GameData game = games.get(i);
+                    //print other info
                     System.out.println("Game " + (i+1) + ": " + game.gameName());
+                    System.out.println("Players: " + game.blackUsername() + " & " + game.whiteUsername());
                 }
             } else {
                 System.out.println("No games available.");
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
     private void joinGame(Scanner scanner){
@@ -218,7 +222,7 @@ public class Client {
 
             UiChessBoard.drawChessBoard(System.out, board); //what chess board method should i be calling
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
     private void joinObserver(Scanner scanner){
@@ -235,7 +239,7 @@ public class Client {
             board.resetBoard();
             UiChessBoard.drawChessBoard(System.out, board);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
 
     }

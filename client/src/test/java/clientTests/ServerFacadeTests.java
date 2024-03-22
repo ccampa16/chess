@@ -97,7 +97,7 @@ public class ServerFacadeTests {
     }
     @Test
     void logout() throws Exception {
-        //assertDoesNotThrow(() -> facade.logout(new LogoutRequest(auth)));
+        assertDoesNotThrow(() -> facade.logout(new LogoutRequest(auth)));
     }
     @Test
     void logoutFail() throws Exception {
@@ -108,9 +108,9 @@ public class ServerFacadeTests {
     }
     @Test
     void createGame() throws Exception {
-//        CreateGameRequest request = new CreateGameRequest("newGame");
-//        CreateGameResult result = facade.createGame(request);
-//        assertNotNull(result);
+        CreateGameRequest request = new CreateGameRequest("newGame");
+        CreateGameResult result = facade.createGame(request);
+        assertNotNull(result);
     }
     @Test
     void createGameFail() throws Exception {

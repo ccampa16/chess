@@ -18,12 +18,23 @@ import java.net.URL;
 
 public class ServerFacade {
     private final String serverUrl;
+    private String authtoken;
+    private String username;
     public ServerFacade(String serverUrl) {
         this.serverUrl = serverUrl;
     }
     public void run(){
 
     }
+
+    public String getAuthtoken() {
+        return authtoken;
+    }
+
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
+    }
+
     public LoginResult login(LoginRequest request) throws Exception {
         return makeRequest("POST", "/session", request, LoginResult.class);
     }
@@ -36,8 +47,8 @@ public class ServerFacade {
     public CreateGameResult createGame(CreateGameRequest request) throws Exception {
         return makeRequest("POST", "/game", request, CreateGameResult.class);
     }
-    public ListGamesResult listGames(ListGamesRequest request) throws Exception {
-        return makeRequest("GET", "/game", request, ListGamesResult.class);
+    public ListGamesResult listGames() throws Exception {
+        return makeRequest("GET", "/game", null, ListGamesResult.class);
     }
     public JoinGameResult joinGame(JoinGameRequest request) throws Exception {
         return makeRequest("PUT", "/game", request, JoinGameResult.class);
@@ -53,7 +64,12 @@ public class ServerFacade {
             http.setReadTimeout(5000);
             http.setRequestMethod(method);
             http.setDoOutput(true);
-            writeBody(request, http);
+            if (authtoken != null) {
+                http.addRequestProperty("authorization", authtoken);
+            }
+            if (request != null) {
+                writeBody(request, http);
+            }
             http.connect();
             throwIfNotSuccessful(http);
             return readBody(http, resultClass);
