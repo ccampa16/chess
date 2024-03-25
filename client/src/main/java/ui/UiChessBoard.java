@@ -46,6 +46,18 @@ public class UiChessBoard {
         }
         out.println();
     }
+    private static void drawFlippedHeaders (PrintStream out){
+        setBlack(out);
+        out.print(EMPTY + " ");
+        String[] headers = {"h", "g", "f", "e", "d", "c", "b", "a"};
+        for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; ++boardCol) {
+            drawHeader(out, headers[boardCol]);
+            if (boardCol < BOARD_SIZE_IN_SQUARES - 1) {
+                out.print("  ");
+            }
+        }
+        out.println();
+    }
 
     private static void drawHeader(PrintStream out, String headerText) {
         printHeaderText(out, headerText);
@@ -81,8 +93,9 @@ public class UiChessBoard {
         drawFlippedBoard(out, board);
     }
     private static void drawFlippedBoard(PrintStream out, chess.ChessBoard board){
-        drawHeaders(out);
-        String[] rowHeader = {"1", "2", "3", "4", "5", "6", "7", "8"};
+        drawFlippedHeaders(out);
+        String[] rowHeader = {"8", "7", "6", "5", "4", "3", "2", "1"};
+       // String[] rowHeader = {"1", "2", "3", "4", "5", "6", "7", "8"};
         for (int boardRow = BOARD_SIZE_IN_SQUARES -1; boardRow >=0; --boardRow){
             out.print(" " + rowHeader[boardRow] + " ");
             out.print(SET_TEXT_COLOR_WHITE);
@@ -95,7 +108,7 @@ public class UiChessBoard {
             out.print(" " + rowHeader[boardRow] + " ");
             out.println();
         }
-        drawHeaders(out);
+        drawFlippedHeaders(out);
     }
 
 

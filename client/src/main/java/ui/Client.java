@@ -20,6 +20,7 @@ public class Client {
     private String authToken;
     private List<GameData> games;
     private int gameID;
+    private String username;
     public Client(String serverUrl){
         this.serverUrl = serverUrl;
         this.serverFacade = new ServerFacade(serverUrl);
@@ -133,6 +134,7 @@ public class Client {
             serverFacade.setAuthtoken(result.getAuthToken());
             //authToken = result.getAuthToken();
             loggedIn = true;
+            this.username = username;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -152,6 +154,7 @@ public class Client {
             serverFacade.setAuthtoken(result.getAuthToken());
             //authToken = result.getAuthToken();
             loggedIn = true;
+            this.username = username;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -219,7 +222,25 @@ public class Client {
         if (games != null && gameNum >= 1 && gameNum <= games.size()){
             GameData selectedGame = games.get(gameNum - 1); //gameNum - 1??
             gameID = selectedGame.gameID();
+
+            //rejoin logic
+//            boolean alreadyJoined = selectedGame.blackUsername().equals(username) || selectedGame.whiteUsername().equals(username);
+//            if (alreadyJoined){
+//                JoinGameRequest request = new JoinGameRequest(color, gameID);
+//                try {
+//                    JoinGameResult result = serverFacade.joinGame(request);
+//                    System.out.println("You have re-joined");
+//                    chess.ChessBoard board = new chess.ChessBoard();
+//                    board.resetBoard();
+//
+//                    UiChessBoard.drawChessBoard(System.out, board); //what chess board method should i be calling
+//                    return;
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
         }
+
 
         JoinGameRequest request = new JoinGameRequest(color, gameID);
         try {
@@ -227,8 +248,7 @@ public class Client {
             System.out.println("You have joined");
             chess.ChessBoard board = new chess.ChessBoard();
             board.resetBoard();
-
-            UiChessBoard.drawChessBoard(System.out, board); //what chess board method should i be calling
+            UiChessBoard.drawChessBoard(System.out, board);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

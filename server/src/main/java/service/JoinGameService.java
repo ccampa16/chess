@@ -25,19 +25,24 @@ public class JoinGameService {
         if (gameDAO.getGame(gameID) == null){
             throw new BadRequestException("Bad request");
         }
-        if (playerColor != null){
-            if (playerColor.equals("WHITE")){
-                if (game.whiteUsername() != null) {
+        String username = authDAO.getAuth(authToken).username();
+        if (playerColor != null) {
+            if (playerColor.equals("WHITE") && game.whiteUsername() != null) {
+                //if (game.whiteUsername() != null) {
+                if (!username.equals(game.whiteUsername())) {
                     throw new AlreadyTakenException("Already taken");
                 } else {
                     gameDAO.updateGame(new GameData(game.gameID(), authDAO.getAuth(authToken).username(), game.blackUsername(), game.gameName(), game.game()));
                 }
-                } else if (playerColor.equals("BLACK")){
-                if (game.blackUsername() != null){
+            } else if (playerColor.equals("BLACK") && game.blackUsername() != null) {
+                //if (game.blackUsername() != null){
+                if (!username.equals(game.blackUsername())) {
                     throw new AlreadyTakenException("Already taken");
                 } else {
                     gameDAO.updateGame(new GameData(game.gameID(), game.whiteUsername(), authDAO.getAuth(authToken).username(), game.gameName(), game.game()));
                 }
+            } else {
+                gameDAO.updateGame(new GameData(game.gameID(), authDAO.getAuth(authToken).username(), game.blackUsername(), game.gameName(), game.game()));
             }
         }
     }
