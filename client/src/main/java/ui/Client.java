@@ -18,6 +18,8 @@ public class Client {
     private boolean loggedIn = false;
     private UserData userData;
     private String authToken;
+    private List<GameData> games;
+    private int gameID;
     public Client(String serverUrl){
         this.serverUrl = serverUrl;
         this.serverFacade = new ServerFacade(serverUrl);
@@ -181,7 +183,8 @@ public class Client {
         try {
             ListGamesResult result = serverFacade.listGames();
             System.out.println("List of games: ");
-            List<GameData> games = result.getGames();
+            games = result.getGames();
+            //List<GameData> games = result.getGames();
             if (games != null){
                 for (int i = 0; i < games.size(); i++){
                     GameData game = games.get(i);
@@ -201,6 +204,7 @@ public class Client {
         System.out.print("Enter the number of the game you want to join: ");
         int gameNum = scanner.nextInt();
         scanner.nextLine();
+        //
         String color = null;
         boolean validColor = false;
         while (!validColor){
@@ -212,8 +216,12 @@ public class Client {
                 System.out.println("Invalid color. Please enter 'BLACK' or 'WHITE'");
             }
         }
+        if (games != null && gameNum >= 1 && gameNum <= games.size()){
+            GameData selectedGame = games.get(gameNum - 1); //gameNum - 1??
+            gameID = selectedGame.gameID();
+        }
 
-        JoinGameRequest request = new JoinGameRequest(color, gameNum);
+        JoinGameRequest request = new JoinGameRequest(color, gameID);
         try {
             JoinGameResult result = serverFacade.joinGame(request);
             System.out.println("You have joined");
@@ -231,7 +239,11 @@ public class Client {
         int gameNum = scanner.nextInt();
         scanner.nextLine();
         String color = null;
-        JoinGameRequest request = new JoinGameRequest(color, gameNum);
+        if (games != null && gameNum >= 1 && gameNum <= games.size()){
+            GameData selectedGame = games.get(gameNum - 1); //gameNum - 1??
+            gameID = selectedGame.gameID();
+        }
+        JoinGameRequest request = new JoinGameRequest(color, gameID);
         try {
             JoinGameResult result = serverFacade.joinGame(request);
             System.out.println("You have joined");
