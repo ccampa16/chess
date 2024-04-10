@@ -3,6 +3,7 @@ package websocket;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import dataAccess.Exceptions.BadRequestException;
+import model.GameData;
 import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.websocket.api.annotations.*;
 import service.JoinGameService;
@@ -46,6 +47,12 @@ public class WebSocketHandler {
     private void join(Session session, String msg){
         if (msg.length() > 1) {
             var joinPlayer = gson.fromJson(msg, JoinPlayer.class);
+            int gameID = joinPlayer.getGameID();
+            String auth = joinPlayer.getAuthString();
+//            GameData gameData = joinGameService.
+//            connections.add(gameID, auth, session);
+//            if ()
+
         }
 
     }
