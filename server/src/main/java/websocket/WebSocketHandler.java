@@ -3,6 +3,8 @@ package websocket;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import dataAccess.Exceptions.BadRequestException;
+import dataAccess.Exceptions.DataAccessException;
+import dataAccess.Interface.GameDAO;
 import model.GameData;
 import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.websocket.api.annotations.*;
@@ -18,6 +20,7 @@ public class WebSocketHandler {
 
     private final ConnectionManager connections = new ConnectionManager();
 
+    private GameDAO gameDAO;
     private final JoinGameService joinGameService;
     private final Gson gson;
     public WebSocketHandler(Gson gson, JoinGameService joinGameService){
@@ -44,11 +47,14 @@ public class WebSocketHandler {
         }
     }
 
-    private void join(Session session, String msg){
+    private void join(Session session, String msg) throws DataAccessException {
         if (msg.length() > 1) {
             var joinPlayer = gson.fromJson(msg, JoinPlayer.class);
             int gameID = joinPlayer.getGameID();
             String auth = joinPlayer.getAuthString();
+            GameData gameData = gameDAO.getGame(gameID);
+            ChessGame.TeamColor teamColor = joinPlayer.getPlayerColor();
+           // String username = gameData.us
 //            GameData gameData = joinGameService.
 //            connections.add(gameID, auth, session);
 //            if ()
