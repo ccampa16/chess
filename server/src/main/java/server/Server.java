@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.Gson;
 import dataAccess.Exceptions.DataAccessException;
 import dataAccess.Memory.AuthDAOMemory;
 import dataAccess.Memory.GameDAOMemory;
@@ -10,6 +11,7 @@ import dataAccess.SQL.SQLUserDAO;
 import handler.*;
 import service.*;
 import spark.*;
+import websocket.WebSocketHandler;
 
 
 public class Server {
@@ -17,9 +19,14 @@ public class Server {
     public int run(int desiredPort) {
         Spark.port(desiredPort);
 
+
+
         Spark.staticFiles.location("web");
 
+
         createRoutes();
+
+
         Spark.awaitInitialization();
         return Spark.port();
     }
@@ -90,6 +97,10 @@ public class Server {
         JoinGameHandler joinGameHandler = new JoinGameHandler(joinGameService);
         Spark.put("/game", (request, response) -> joinGameHandler.joinGame(request, response));
 
+
+        //WEBSOCKET
+        var gson = new Gson();
+        var webSocketHandler = new WebSocketHandler(gson, joinGameService);
     }
 
 
