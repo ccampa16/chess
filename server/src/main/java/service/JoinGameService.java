@@ -46,4 +46,13 @@ public class JoinGameService {
             }
         }
     }
+    public GameData getGame(int gameID) throws DataAccessException {
+        GameData game = gameDAO.getGame(gameID);
+        if(game == null){
+            throw new BadRequestException("Game not found");
+        }
+        return game;
+    }
+
+
 }

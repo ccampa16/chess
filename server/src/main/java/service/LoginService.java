@@ -19,6 +19,9 @@ public class LoginService {
         this.userDAO = userDAO;
         this.authDAO = authDAOMemory;
     }
+    public String getUser(String auth) throws DataAccessException {
+        return authDAO.getAuth(auth).username();
+    }
     public LoginResult login(String username, String password) throws DataAccessException {
 //        if (userDAO.checkUser(username, password)) {
 //            String authToken = UUID.randomUUID().toString();

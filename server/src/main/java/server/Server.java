@@ -39,6 +39,8 @@ public class Server {
             SQLGameDAO sqlGameDAO = new SQLGameDAO();
             SQLAuthDAO sqlAuthDAO = new SQLAuthDAO();
 
+            gson = new Gson();
+
             clearService = new ClearService(sqlUserDAO, sqlAuthDAO, sqlGameDAO);
             clearHandler = new ClearHandler(clearService);
 
@@ -62,10 +64,11 @@ public class Server {
             joinGameHandler = new JoinGameHandler(joinGameService);
 
 
-            websocketHandler = new WebSocketHandler(gson, joinGameService);
+            websocketHandler = new WebSocketHandler(gson, joinGameService, loginService);
 
         } catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("caught error");
         }
     }
 
@@ -82,7 +85,7 @@ public class Server {
         return Spark.port();
     }
     private  void createRoutes () {
-        Spark.before((req, res) -> System.out.println("Executing route: " + req.pathInfo()));
+        //Spark.before((req, res) -> System.out.println("Executing route: " + req.pathInfo()));
 
 
 //        ClearService clearService = null;

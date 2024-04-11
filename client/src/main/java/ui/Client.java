@@ -223,22 +223,6 @@ public class Client {
             GameData selectedGame = games.get(gameNum - 1); //gameNum - 1??
             gameID = selectedGame.gameID();
 
-            //rejoin logic
-//            boolean alreadyJoined = selectedGame.blackUsername().equals(username) || selectedGame.whiteUsername().equals(username);
-//            if (alreadyJoined){
-//                JoinGameRequest request = new JoinGameRequest(color, gameID);
-//                try {
-//                    JoinGameResult result = serverFacade.joinGame(request);
-//                    System.out.println("You have re-joined");
-//                    chess.ChessBoard board = new chess.ChessBoard();
-//                    board.resetBoard();
-//
-//                    UiChessBoard.drawChessBoard(System.out, board); //what chess board method should i be calling
-//                    return;
-//                } catch (Exception e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
         }
 
 
@@ -275,4 +259,55 @@ public class Client {
         }
 
     }
+
+    private void displayGamePlayCommand(Scanner scanner){
+        System.out.println("Choose an option:");
+        System.out.println("1. Help");
+        System.out.println("2. Redraw Chess Board");
+        System.out.println("3. Leave");
+        System.out.println("4. Make Move");
+        System.out.println("5. Resign");
+        System.out.println("6. Highlight Legal Moves");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice){
+            case 1:
+                displayHelpGamePlay();
+                break;
+            case 2:
+                redrawChessBoard(scanner);
+                break;
+            case 3:
+                leaveGame();
+                break;
+            case 4:
+                makeMove(scanner);
+                break;
+            case 5:
+                resign();
+                break;
+            case 6:
+                highlightLegalMoves(scanner);
+                break;
+            default:
+                System.out.println("Invalid choice, please try again:)");
+        }
+    }
+
+    private void displayHelpGamePlay(){
+        System.out.println("Here are your command options:");
+        System.out.println("1. Help - Display this help message");
+        System.out.println("2. Redraw Chess Board - Draw out the current chess board");
+        System.out.println("3. Leave - Leave chess game");
+        System.out.println("4. Make Move - Make a move on the board");
+        System.out.println("5. Resign - Forfeit and end the game");
+        System.out.println("6. Highlight Legal Moves - Highlight legal moves for your selected piece");
+    }
+    private void redrawChessBoard(Scanner scanner){}
+    private void leaveGame(){}
+    private void makeMove(Scanner scanner){}
+    private void resign(){}
+    private void highlightLegalMoves(Scanner scanner){}
+
 }
